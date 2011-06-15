@@ -1,0 +1,5 @@
+h1. AS3-UIComponents
+
+AS3-UIComponents is a attempt to provide a series of ui components.
+
+AS3-UIComponents uses the "MIT":http://en.wikipedia.org/wiki/MIT_License license.
