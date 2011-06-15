@@ -6,7 +6,5 @@ package org.osflash.ui.components.button
 	 */
 	public interface IUIButtonView extends IUIComponentView
 	{
-		
-		
 	}
 }

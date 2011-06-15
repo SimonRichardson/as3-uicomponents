@@ -12,5 +12,11 @@ package org.osflash.ui.components.component
 		
 		function get model() : IUIComponentModel;
 		function set model(value : IUIComponentModel) : void;
+		
+		function get state() : IUIComponentState;
+		function set state(value : IUIComponentState) : void;
+		
+		function get signalProxy() : IUIComponentSignalProxy;
+		function set signalProxy(value : IUIComponentSignalProxy) : void;
 	}
 }

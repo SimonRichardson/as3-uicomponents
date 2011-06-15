@@ -6,6 +6,9 @@ package org.osflash.ui.components.component
 	public interface IUIComponentState
 	{
 		
+		function bind(component : IUIComponent) : void;
+		function unbind() : void;
+		
 		function get enabled() : Boolean;
 		function set enabled(value : Boolean) : void;
 

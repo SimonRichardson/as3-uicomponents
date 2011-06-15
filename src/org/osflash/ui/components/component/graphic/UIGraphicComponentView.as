@@ -29,6 +29,11 @@ package org.osflash.ui.components.component.graphic
 			if (null == component) throw new ArgumentError('IUIComponent can not be null');
 
 			_component = component;
+			
+			_component.signals.mouseInSignal.add(handleMouseInSignal);
+			_component.signals.mouseOutSignal.add(handleMouseOutSignal);
+			_component.signals.mouseDownSignal.add(handleMouseDownSignal);
+			_component.signals.mouseUpSignal.add(handleMouseUpSignal);
 		}
 
 		/**
@@ -45,6 +50,61 @@ package org.osflash.ui.components.component.graphic
 		public function captureTarget(point : Point) : ISignalTarget
 		{
 			return null;
+		}
+		
+				
+		/**
+		 * @private
+		 */
+		protected function handleMouseInSignal(	target : ISignalTarget, 
+												mousePos : Point, 
+												mouseDown : Boolean
+												) : void
+		{ 
+			if(_component.state.enabled)
+			{
+
+			}
+		}
+		
+		/**
+		 * @private
+		 */
+		protected function handleMouseOutSignal(	target : ISignalTarget, 
+													mousePos : Point, 
+													mouseDown : Boolean
+													) : void
+		{
+			if(_component.state.enabled)
+			{
+
+			}
+		}
+		
+		/**
+		 * @private
+		 */
+		protected function handleMouseDownSignal(	target : ISignalTarget, 
+													mousePos : Point 
+													) : void
+		{
+			if(_component.state.enabled)
+			{
+
+			}
+		}
+		
+		/**
+		 * @private
+		 */
+		protected function handleMouseUpSignal(	target : ISignalTarget, 
+												mousePos : Point 
+												) : void
+		{
+			if(_component.state.enabled)
+			{
+
+			}
 		}
 	}
 }

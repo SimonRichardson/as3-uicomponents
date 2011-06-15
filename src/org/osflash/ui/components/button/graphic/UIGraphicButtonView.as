@@ -2,11 +2,9 @@ package org.osflash.ui.components.button.graphic
 {
 	import org.osflash.ui.components.button.IUIButtonView;
 	import org.osflash.ui.components.button.UIButton;
+	import org.osflash.ui.components.button.UIButtonSignalProxy;
 	import org.osflash.ui.components.component.IUIComponent;
 	import org.osflash.ui.components.component.graphic.UIGraphicComponentView;
-	import org.osflash.ui.signals.ISignalTarget;
-
-	import flash.geom.Point;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
@@ -18,8 +16,14 @@ package org.osflash.ui.components.button.graphic
 		 */
 		private var _component : UIButton;
 		
+		/**
+		 * @private
+		 */
+		private var _signalProxy : UIButtonSignalProxy;
+		
 		public function UIGraphicButtonView()
 		{
+			super();
 		}
 		
 		/**
@@ -30,10 +34,13 @@ package org.osflash.ui.components.button.graphic
 			super.bind(component);
 			
 			_component = UIButton(component);
-			_component.signals.mouseInSignal.add(handleMouseInSignal);
-			_component.signals.mouseOutSignal.add(handleMouseOutSignal);
-			_component.signals.mouseDownSignal.add(handleMouseDownSignal);
-			_component.signals.mouseUpSignal.add(handleMouseUpSignal);
+
+			_signalProxy = UIButtonSignalProxy(_component.signalProxy);
+			_signalProxy.textChanged.add(handleTextUpdateSignal);
+			_signalProxy.enabled.add(handleEnabledSignal);
+			_signalProxy.hovered.add(handleHoveredSignal);
+			_signalProxy.focused.add(handleFocusedSignal);
+			_signalProxy.pressed.add(handlePressedSignal);
 		}
 				
 		/**
@@ -42,6 +49,7 @@ package org.osflash.ui.components.button.graphic
 		override public function unbind() : void
 		{
 			_component = null;
+			_signalProxy = null;
 			
 			super.unbind();
 		}
@@ -49,10 +57,7 @@ package org.osflash.ui.components.button.graphic
 		/**
 		 * @private
 		 */
-		private function handleMouseInSignal(	target : ISignalTarget, 
-												mousePos : Point, 
-												mouseDown : Boolean
-												) : void
+		protected function repaint() : void
 		{
 			
 		}
@@ -60,10 +65,7 @@ package org.osflash.ui.components.button.graphic
 		/**
 		 * @private
 		 */
-		private function handleMouseOutSignal(	target : ISignalTarget, 
-												mousePos : Point, 
-												mouseDown : Boolean
-												) : void
+		private function handleTextUpdateSignal(value : String) : void
 		{
 			
 		}
@@ -71,9 +73,7 @@ package org.osflash.ui.components.button.graphic
 		/**
 		 * @private
 		 */
-		private function handleMouseDownSignal(	target : ISignalTarget, 
-												mousePos : Point 
-												) : void
+		private function handleEnabledSignal(value : Boolean) : void
 		{
 			
 		}
@@ -81,9 +81,23 @@ package org.osflash.ui.components.button.graphic
 		/**
 		 * @private
 		 */
-		private function handleMouseUpSignal(	target : ISignalTarget, 
-												mousePos : Point 
-												) : void
+		private function handleHoveredSignal(value : Boolean) : void
+		{
+			
+		}
+		
+		/**
+		 * @private
+		 */
+		private function handleFocusedSignal(value : Boolean) : void
+		{
+			
+		}
+		
+		/**
+		 * @private
+		 */
+		private function handlePressedSignal(value : Boolean) : void
 		{
 			
 		}

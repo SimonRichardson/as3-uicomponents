@@ -26,12 +26,45 @@ package org.osflash.ui.components.component
 		 */
 		private var _pressed :  Boolean;
 		
+		/**
+		 * @private
+		 */
+		private var _component : IUIComponent;
+		
+		/**
+		 * @private
+		 */
+		private var _signalProxy : IUIComponentSignalProxy;
+		
 		public function UIComponentState()
 		{
 			_enabled = true;
 			_hovered = false;
 			_focused = false;
 			_pressed = false;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */		
+		public function bind(component : IUIComponent) : void
+		{
+			if(null == component) throw new ArgumentError('IUIComponent can not be null');
+			
+			_component = component;
+			_signalProxy = _component.signalProxy;
+			
+			if(null == _signalProxy) throw new ArgumentError('IUIComponentSignalProxy can not ' + 
+																						'be null'); 
+		}
+
+		/**
+		 * @inheritDoc
+		 */
+		public function unbind() : void
+		{
+			_component = null;
+			_signalProxy = null;
 		}
 		
 		/**
@@ -43,6 +76,7 @@ package org.osflash.ui.components.component
 			if (_enabled != value)
 			{
 				_enabled = value;
+				_signalProxy.enabled.dispatch(value);
 			}
 		}
 
@@ -55,6 +89,7 @@ package org.osflash.ui.components.component
 			if (_hovered != value)
 			{
 				_hovered = value;
+				_signalProxy.hovered.dispatch(value);
 			}
 		}
 
@@ -67,6 +102,7 @@ package org.osflash.ui.components.component
 			if (_focused != value)
 			{
 				_focused = value;
+				_signalProxy.focused.dispatch(value);
 			}
 		}
 
@@ -79,6 +115,7 @@ package org.osflash.ui.components.component
 			if(_pressed != value)
 			{
 				_pressed = value;
+				_signalProxy.pressed.dispatch(value);
 			}
 		}
 	}
