@@ -5,6 +5,10 @@ package org.osflash.ui.components.button.graphic
 	import org.osflash.ui.components.button.UIButtonSignalProxy;
 	import org.osflash.ui.components.component.IUIComponent;
 	import org.osflash.ui.components.component.graphic.UIGraphicComponentView;
+
+	import flash.display.DisplayObjectContainer;
+	import flash.display.Graphics;
+	import flash.display.Shape;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
@@ -21,6 +25,11 @@ package org.osflash.ui.components.button.graphic
 		 */
 		private var _signalProxy : UIButtonSignalProxy;
 		
+		/**
+		 * @private
+		 */
+		private var _background : Shape;
+		
 		public function UIGraphicButtonView()
 		{
 			super();
@@ -34,6 +43,9 @@ package org.osflash.ui.components.button.graphic
 			super.bind(component);
 			
 			_component = UIButton(component);
+			
+			const container : DisplayObjectContainer = _component.displayObjectContainer;
+			container.addChild(_background = new Shape());
 
 			_signalProxy = UIButtonSignalProxy(_component.signalProxy);
 			_signalProxy.textChanged.add(handleTextUpdateSignal);
@@ -49,9 +61,29 @@ package org.osflash.ui.components.button.graphic
 		override public function unbind() : void
 		{
 			_component = null;
+			
+			if(null != _background.parent)
+				_background.parent.removeChild(_background);
+			_background = null;
+			
+			_signalProxy.textChanged.remove(handleTextUpdateSignal);
+			_signalProxy.enabled.remove(handleEnabledSignal);
+			_signalProxy.hovered.remove(handleHoveredSignal);
+			_signalProxy.focused.remove(handleFocusedSignal);
+			_signalProxy.pressed.remove(handlePressedSignal);
 			_signalProxy = null;
 			
 			super.unbind();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */	
+		override public function resizeTo(width : int, height : int) : void
+		{
+			super.resizeTo(width, height);
+			
+			repaint();
 		}
 		
 		/**
@@ -59,7 +91,11 @@ package org.osflash.ui.components.button.graphic
 		 */
 		protected function repaint() : void
 		{
-			
+			const graphics : Graphics = _background.graphics;
+			graphics.clear();
+			graphics.beginFill(0xff00ff);
+			graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+			graphics.endFill();
 		}
 		
 		/**

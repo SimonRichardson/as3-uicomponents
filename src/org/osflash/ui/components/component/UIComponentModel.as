@@ -19,7 +19,7 @@ package org.osflash.ui.components.component
 		/**
 		 * @private
 		 */
-		private var _keyChar : int;
+		private var _keyChar : String;
 				
 		/**
 		 * @private
@@ -64,8 +64,8 @@ package org.osflash.ui.components.component
 		/**
 		 * @inheritDoc
 		 */
-		public function get keyChar() : int { return _keyChar; }
-		public function set keyChar(value : int) : void { _keyChar = value; }
+		public function get keyChar() : String { return _keyChar; }
+		public function set keyChar(value : String) : void { _keyChar = value; }
 
 	}
 }

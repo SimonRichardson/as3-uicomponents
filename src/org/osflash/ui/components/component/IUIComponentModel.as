@@ -15,7 +15,7 @@ package org.osflash.ui.components.component
 		function get tabIndex() : int;
 		function set tabIndex(value : int) : void;
 
-		function get keyChar() : int;
-		function set keyChar(value : int) : void;
+		function get keyChar() : String;
+		function set keyChar(value : String) : void;
 	}
 }

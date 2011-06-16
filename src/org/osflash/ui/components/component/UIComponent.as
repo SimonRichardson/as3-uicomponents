@@ -1,5 +1,6 @@
 package org.osflash.ui.components.component
 {
+	import org.osflash.ui.components.errors.AbstractMethodError;
 	import org.osflash.ui.display.UISprite;
 	import org.osflash.ui.signals.ISignalTarget;
 
@@ -30,10 +31,17 @@ package org.osflash.ui.components.component
 		 */
 		private var _proxy : IUIComponentSignalProxy;
 		
-		public function UIComponent(view : IUIComponentView, model : IUIComponentModel)
+		public function UIComponent(view : IUIComponentView)
 		{
-			this.view = view;
-			this.model = model;
+			initComponent(view);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function resizeTo(width : int, height : int) : void
+		{
+			if(null != _view) view.resizeTo(width, height);
 		}
 		
 		/**
@@ -44,6 +52,51 @@ package org.osflash.ui.components.component
 			if(null != _view) return _view.captureTarget(point);
 			return super.captureTarget(point);
 		}
+		
+		/**
+		 * @private
+		 */
+		final protected function initComponent(view : IUIComponentView) : void
+		{
+			initModel();
+			initState();
+			initProxy();
+			
+			initView(view);
+		}
+		
+		/**
+		 * @private
+		 */
+		protected function initView(value : IUIComponentView) : void
+		{
+			if(null == value) throw new ArgumentError('IUIComponentView can not be null');
+			view = value;
+		}
+		
+		/**
+		 * @private
+		 */
+		protected function initModel() : void
+		{
+			throw new AbstractMethodError();
+		}
+		
+		/**
+		 * @private
+		 */
+		protected function initState() : void
+		{
+			_state = new UIComponentState();
+		}
+		
+		/**
+		 * @private
+		 */
+		protected function initProxy() : void
+		{
+			throw new AbstractMethodError();
+		}
 				
 		/**
 		 * @inheritDoc
@@ -51,14 +104,14 @@ package org.osflash.ui.components.component
 		public function get view() : IUIComponentView { return _view; }
 		public function set view(value : IUIComponentView) : void
 		{
-			if(null == view) throw new ArgumentError('IUIComponentView can not be null');
+			if(null == value) throw new ArgumentError('IUIComponentView can not be null');
 			
 			if(_view == value) return;
 			
 			if(null != _view) _view.unbind();
 			
 			_view = value;
-			if(signalProxy) _view.bind(this);
+			if(null != signalProxy) _view.bind(this);
 		}
 		
 		/**
@@ -67,14 +120,14 @@ package org.osflash.ui.components.component
 		public function get model() : IUIComponentModel { return _model; }
 		public function set model(value : IUIComponentModel) : void
 		{
-			if(null == view) throw new ArgumentError('IUIComponentModel can not be null');
+			if(null == value) throw new ArgumentError('IUIComponentModel can not be null');
 			
 			if(_model == value) return;
 			
 			if(null != _model) _model.unbind();
 			
 			_model = value;
-			if(signalProxy) _model.bind(this);
+			if(null != signalProxy) _model.bind(this);
 		}
 		
 		/**
@@ -90,7 +143,7 @@ package org.osflash.ui.components.component
 			if(null != _state) _state.unbind();
 			
 			_state = value;
-			if(signalProxy) _state.bind(this);
+			if(null != signalProxy) _state.bind(this);
 		}
 		
 		/**
@@ -109,10 +162,22 @@ package org.osflash.ui.components.component
 			
 			_proxy = value;
 			
-			if(view) _view.bind(this);
-			if(model) _model.bind(this);
-			if(state) _state.bind(this);
+			if(null != view) _view.bind(this);
+			if(null != model) _model.bind(this);
+			if(null != state) _state.bind(this);
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function get width() : int { return _view.bounds.width; }
+		override public function set width(value : int) : void { resizeTo(value, height); }
+		
+		/**
+		 * @inheritDoc
+		 */
+		override public function get height() : int { return _view.bounds.height; }
+		override public function set height(value : int) : void { resizeTo(width, value); }
 		
 		/**
 		 * @inheritDoc
@@ -123,5 +188,36 @@ package org.osflash.ui.components.component
 			
 			state.enabled = value;
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get focused() : Boolean { return state.focused; }
+		public function set focused(value : Boolean) : void { state.focused = value; }
+				
+		/**
+		 * @inheritDoc
+		 */
+		public function get hovered() : Boolean { return state.hovered; }
+		public function set hovered(value : Boolean) : void { state.hovered = value; }
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get pressed() : Boolean { return state.pressed; }
+		public function set pressed(value : Boolean) : void { state.pressed = value; }
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get tabIndex() : int { return model.tabIndex; }
+		public function set tabIndex(value : int) : void { model.tabIndex = value; }
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get keyChar() : String { return model.keyChar; }
+		public function set keyChar(value : String) : void { model.keyChar = value; }
+		
 	}
 }

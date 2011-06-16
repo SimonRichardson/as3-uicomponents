@@ -7,7 +7,7 @@ package org.osflash.ui.components.button
 	 */
 	public class UIButton extends UIComponent
 	{
-
+				
 		/**
 		 * @private
 		 */
@@ -15,9 +15,25 @@ package org.osflash.ui.components.button
 		
 		public function UIButton(view : IUIButtonView)
 		{
-			super(view, new UIButtonModel());
+			super(view);
 		}
 				
+		/**
+		 * @inheritDoc
+		 */	
+		override protected function initModel() : void
+		{
+			model = new UIButtonModel();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */	
+		override protected function initProxy() : void
+		{
+			signalProxy = new UIButtonSignalProxy();
+		}
+						
 		/**
 		 * @inheritDoc
 		 */	

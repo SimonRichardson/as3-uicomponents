@@ -1,7 +1,7 @@
 package org.osflash.ui.components.component.graphic
 {
 	import org.osflash.ui.components.component.IUIComponent;
-	import org.osflash.ui.components.component.IUIComponentView;
+	import org.osflash.ui.components.component.UIComponentView;
 	import org.osflash.ui.signals.ISignalTarget;
 
 	import flash.geom.Point;
@@ -9,7 +9,7 @@ package org.osflash.ui.components.component.graphic
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIGraphicComponentView implements IUIComponentView
+	public class UIGraphicComponentView extends UIComponentView
 	{
 
 		/**
@@ -24,7 +24,7 @@ package org.osflash.ui.components.component.graphic
 		/**
 		 * @inheritDoc
 		 */
-		public function bind(component : IUIComponent) : void
+		override public function bind(component : IUIComponent) : void
 		{
 			if (null == component) throw new ArgumentError('IUIComponent can not be null');
 
@@ -34,12 +34,14 @@ package org.osflash.ui.components.component.graphic
 			_component.signals.mouseOutSignal.add(handleMouseOutSignal);
 			_component.signals.mouseDownSignal.add(handleMouseDownSignal);
 			_component.signals.mouseUpSignal.add(handleMouseUpSignal);
+			
+			_component.signals.focusOutSignal.add(handleFocusedOutSignal);
 		}
 
 		/**
 		 * @inheritDoc
 		 */
-		public function unbind() : void
+		override public function unbind() : void
 		{
 			_component = null;
 		}
@@ -47,11 +49,23 @@ package org.osflash.ui.components.component.graphic
 		/**
 		 * @inheritDoc
 		 */
-		public function captureTarget(point : Point) : ISignalTarget
+		override public function captureTarget(point : Point) : ISignalTarget
 		{
-			return null;
+			if(!_component.enabled) return null;
+			return bounds.containsPoint(point) ? _component : null;
 		}
 		
+		/**
+		 * @private
+		 */		
+		protected function handleFocusedOutSignal(target : ISignalTarget) : void
+		{
+			if(target is IUIComponent)
+			{
+				const component : IUIComponent = IUIComponent(target);
+				component.state.focused = false;
+			}
+		}
 				
 		/**
 		 * @private
@@ -60,11 +74,15 @@ package org.osflash.ui.components.component.graphic
 												mousePos : Point, 
 												mouseDown : Boolean
 												) : void
-		{ 
-			if(_component.state.enabled)
+		{
+			if(target is IUIComponent)
 			{
-
+				const component : IUIComponent = IUIComponent(target);				
+				if(component.enabled) component.hovered = true;
 			}
+			
+			mousePos;
+			mouseDown;
 		}
 		
 		/**
@@ -75,10 +93,14 @@ package org.osflash.ui.components.component.graphic
 													mouseDown : Boolean
 													) : void
 		{
-			if(_component.state.enabled)
+			if(target is IUIComponent)
 			{
-
+				const component : IUIComponent = IUIComponent(target);				
+				if(component.enabled) component.hovered = false;
 			}
+			
+			mousePos;
+			mouseDown;
 		}
 		
 		/**
@@ -88,10 +110,13 @@ package org.osflash.ui.components.component.graphic
 													mousePos : Point 
 													) : void
 		{
-			if(_component.state.enabled)
+			if(target is IUIComponent)
 			{
-
+				const component : IUIComponent = IUIComponent(target);				
+				if(component.enabled) component.pressed = true;
 			}
+			
+			mousePos;
 		}
 		
 		/**
@@ -101,10 +126,13 @@ package org.osflash.ui.components.component.graphic
 												mousePos : Point 
 												) : void
 		{
-			if(_component.state.enabled)
+			if(target is IUIComponent)
 			{
-
+				const component : IUIComponent = IUIComponent(target);				
+				if(component.enabled) component.pressed = false;
 			}
+			
+			mousePos;
 		}
 	}
 }

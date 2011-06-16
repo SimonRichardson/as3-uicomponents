@@ -34,6 +34,11 @@ package org.osflash.ui.components.button
 			const view : UIGraphicButtonView = new UIGraphicButtonView();
 			const button : UIButton = new UIButton(view);
 			
+			button.x = 100;
+			button.y = 100;
+			button.width = 200;
+			button.height = 75;
+			
 			document.add(button);
 		}
 	}

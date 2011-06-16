@@ -7,6 +7,8 @@ package org.osflash.ui.components.component
 	public interface IUIComponent extends ISignalTarget
 	{
 		
+		function resizeTo(width : int, height : int) : void;
+		
 		function get view() : IUIComponentView;
 		function set view(value : IUIComponentView) : void;
 		
@@ -18,5 +20,23 @@ package org.osflash.ui.components.component
 		
 		function get signalProxy() : IUIComponentSignalProxy;
 		function set signalProxy(value : IUIComponentSignalProxy) : void;
+		
+		function get enabled() : Boolean;
+		function set enabled(value : Boolean) : void;
+		
+		function get focused() : Boolean;
+		function set focused(value : Boolean) : void;
+				
+		function get hovered() : Boolean;
+		function set hovered(value : Boolean) : void;
+		
+		function get pressed() : Boolean;
+		function set pressed(value : Boolean) : void;
+		
+		function get tabIndex() : int;
+		function set tabIndex(value : int) : void;
+		
+		function get keyChar() : String;
+		function set keyChar(value : String) : void;
 	}
 }
