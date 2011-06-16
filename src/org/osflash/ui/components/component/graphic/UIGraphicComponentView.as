@@ -1,6 +1,5 @@
 package org.osflash.ui.components.component.graphic
 {
-	import org.osflash.logger.utils.debug;
 	import org.osflash.ui.components.component.IUIComponent;
 	import org.osflash.ui.components.component.UIComponentView;
 	import org.osflash.ui.signals.ISignalTarget;
@@ -67,16 +66,17 @@ package org.osflash.ui.components.component.graphic
 												mouseDown : Boolean
 												) : void
 		{
-			debug("MOUSE IN", target);
-			
 			if(target is IUIComponent)
 			{
 				const component : IUIComponent = IUIComponent(target);				
-				if(component.enabled) component.hovered = true;
+				if(component.enabled) 
+				{
+					component.pressed = mouseDown;
+					component.hovered = true;
+				}
 			}
 			
 			mousePos;
-			mouseDown;
 		}
 		
 		/**
@@ -87,16 +87,17 @@ package org.osflash.ui.components.component.graphic
 													mouseDown : Boolean
 													) : void
 		{
-			debug("MOUSE OUT", target);
-			
 			if(target is IUIComponent)
 			{
 				const component : IUIComponent = IUIComponent(target);				
-				if(component.enabled) component.hovered = false;
+				if(component.enabled) 
+				{
+					component.pressed = mouseDown;
+					component.hovered = false;
+				}
 			}
 			
 			mousePos;
-			mouseDown;
 		}
 		
 		/**
@@ -109,7 +110,11 @@ package org.osflash.ui.components.component.graphic
 			if(target is IUIComponent)
 			{
 				const component : IUIComponent = IUIComponent(target);				
-				if(component.enabled) component.pressed = true;
+				if(component.enabled) 
+				{
+					component.hovered = false;
+					component.pressed = true;
+				}
 			}
 			
 			mousePos;
@@ -125,7 +130,11 @@ package org.osflash.ui.components.component.graphic
 			if(target is IUIComponent)
 			{
 				const component : IUIComponent = IUIComponent(target);				
-				if(component.enabled) component.pressed = false;
+				if(component.enabled) 
+				{
+					component.hovered = false;
+					component.pressed = false;
+				}
 			}
 			
 			mousePos;

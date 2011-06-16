@@ -1,6 +1,5 @@
 package org.osflash.ui.components.button.graphic
 {
-	import org.osflash.logger.utils.debug;
 	import org.osflash.ui.components.button.IUIButtonView;
 	import org.osflash.ui.components.button.UIButton;
 	import org.osflash.ui.components.button.UIButtonSignalProxy;
@@ -46,6 +45,8 @@ package org.osflash.ui.components.button.graphic
 		public function UIGraphicButtonView()
 		{
 			super();
+			
+			_colour = 0xaa00aa;
 		}
 		
 		/**
@@ -123,8 +124,9 @@ package org.osflash.ui.components.button.graphic
 		{
 			const graphics : Graphics = _background.graphics;
 			graphics.clear();
-			graphics.beginFill(_colour);
-			graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
+			graphics.beginFill(_colour, 0.5);
+			graphics.lineStyle(1, _colour, 0.8);
+			graphics.drawRoundRect(bounds.x, bounds.y, bounds.width, bounds.height, 15, 15);
 			graphics.endFill();
 		}
 		
@@ -149,8 +151,6 @@ package org.osflash.ui.components.button.graphic
 		 */
 		private function handleHoveredSignal(value : Boolean) : void
 		{
-			debug("here", value);
-			
 			_colour = value ? 0xff00ff : 0xaa00aa;
 			
 			repaint();
@@ -169,7 +169,9 @@ package org.osflash.ui.components.button.graphic
 		 */
 		private function handlePressedSignal(value : Boolean) : void
 		{
+			_colour = value ? 0x00ffff : 0xaa00aa;
 			
+			repaint();
 		}
 	}
 }

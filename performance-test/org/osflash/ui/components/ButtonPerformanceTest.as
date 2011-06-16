@@ -18,7 +18,7 @@ package org.osflash.ui.components
 		{
 			document = new UIDocument(stage, true);
 			
-			for(var i : int = 0; i<1; i++)
+			for(var i : int = 0; i<500; i++)
 			{
 				const view : UIGraphicButtonView = new UIGraphicButtonView();
 				const button : UIButton = new UIButton(view);
