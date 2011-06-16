@@ -1,5 +1,6 @@
 package org.osflash.ui.components.component.graphic
 {
+	import org.osflash.logger.utils.debug;
 	import org.osflash.ui.components.component.IUIComponent;
 	import org.osflash.ui.components.component.UIComponentView;
 	import org.osflash.ui.signals.ISignalTarget;
@@ -45,15 +46,6 @@ package org.osflash.ui.components.component.graphic
 		{
 			_component = null;
 		}
-
-		/**
-		 * @inheritDoc
-		 */
-		override public function captureTarget(point : Point) : ISignalTarget
-		{
-			if(!_component.enabled) return null;
-			return bounds.containsPoint(point) ? _component : null;
-		}
 		
 		/**
 		 * @private
@@ -75,6 +67,8 @@ package org.osflash.ui.components.component.graphic
 												mouseDown : Boolean
 												) : void
 		{
+			debug("MOUSE IN", target);
+			
 			if(target is IUIComponent)
 			{
 				const component : IUIComponent = IUIComponent(target);				
@@ -93,6 +87,8 @@ package org.osflash.ui.components.component.graphic
 													mouseDown : Boolean
 													) : void
 		{
+			debug("MOUSE OUT", target);
+			
 			if(target is IUIComponent)
 			{
 				const component : IUIComponent = IUIComponent(target);				

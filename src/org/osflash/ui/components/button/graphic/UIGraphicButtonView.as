@@ -1,14 +1,17 @@
 package org.osflash.ui.components.button.graphic
 {
+	import org.osflash.logger.utils.debug;
 	import org.osflash.ui.components.button.IUIButtonView;
 	import org.osflash.ui.components.button.UIButton;
 	import org.osflash.ui.components.button.UIButtonSignalProxy;
 	import org.osflash.ui.components.component.IUIComponent;
 	import org.osflash.ui.components.component.graphic.UIGraphicComponentView;
+	import org.osflash.ui.signals.ISignalTarget;
 
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Graphics;
 	import flash.display.Shape;
+	import flash.geom.Point;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
@@ -23,6 +26,11 @@ package org.osflash.ui.components.button.graphic
 		/**
 		 * @private
 		 */
+		private var _container :  DisplayObjectContainer;
+		
+		/**
+		 * @private
+		 */
 		private var _signalProxy : UIButtonSignalProxy;
 		
 		/**
@@ -30,6 +38,11 @@ package org.osflash.ui.components.button.graphic
 		 */
 		private var _background : Shape;
 		
+		/**
+		 * @private
+		 */
+		private var _colour : int;
+				
 		public function UIGraphicButtonView()
 		{
 			super();
@@ -44,8 +57,8 @@ package org.osflash.ui.components.button.graphic
 			
 			_component = UIButton(component);
 			
-			const container : DisplayObjectContainer = _component.displayObjectContainer;
-			container.addChild(_background = new Shape());
+			_container = _component.displayObjectContainer;
+			_container.addChild(_background = new Shape());
 
 			_signalProxy = UIButtonSignalProxy(_component.signalProxy);
 			_signalProxy.textChanged.add(handleTextUpdateSignal);
@@ -61,19 +74,36 @@ package org.osflash.ui.components.button.graphic
 		override public function unbind() : void
 		{
 			_component = null;
+			_container = null;
 			
-			if(null != _background.parent)
-				_background.parent.removeChild(_background);
-			_background = null;
+			if(null != _background)
+			{
+				if(null != _background.parent)
+					_background.parent.removeChild(_background);
+				_background = null;
+			}
 			
-			_signalProxy.textChanged.remove(handleTextUpdateSignal);
-			_signalProxy.enabled.remove(handleEnabledSignal);
-			_signalProxy.hovered.remove(handleHoveredSignal);
-			_signalProxy.focused.remove(handleFocusedSignal);
-			_signalProxy.pressed.remove(handlePressedSignal);
-			_signalProxy = null;
+			if(null != _signalProxy)
+			{
+				_signalProxy.textChanged.remove(handleTextUpdateSignal);
+				_signalProxy.enabled.remove(handleEnabledSignal);
+				_signalProxy.hovered.remove(handleHoveredSignal);
+				_signalProxy.focused.remove(handleFocusedSignal);
+				_signalProxy.pressed.remove(handlePressedSignal);
+				_signalProxy = null;
+			}
 			
 			super.unbind();
+		}
+		
+		/**
+		 * @inheritDoc
+		 */	
+		override public function captureTarget(point : Point) : ISignalTarget
+		{
+			if(!_container.visible || !_component.enabled) return null;
+			point = _container.globalToLocal(point);
+			return bounds.containsPoint(point) ? _component : null;
 		}
 		
 		/**
@@ -93,7 +123,7 @@ package org.osflash.ui.components.button.graphic
 		{
 			const graphics : Graphics = _background.graphics;
 			graphics.clear();
-			graphics.beginFill(0xff00ff);
+			graphics.beginFill(_colour);
 			graphics.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
 			graphics.endFill();
 		}
@@ -119,7 +149,11 @@ package org.osflash.ui.components.button.graphic
 		 */
 		private function handleHoveredSignal(value : Boolean) : void
 		{
+			debug("here", value);
 			
+			_colour = value ? 0xff00ff : 0xaa00aa;
+			
+			repaint();
 		}
 		
 		/**

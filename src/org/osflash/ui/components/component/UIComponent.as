@@ -41,7 +41,14 @@ package org.osflash.ui.components.component
 		 */
 		public function resizeTo(width : int, height : int) : void
 		{
-			if(null != _view) view.resizeTo(width, height);
+			if(null == view) return;
+			
+			width = width < 0 ? 0 : width;
+			height = height < 0 ? 0 : height;
+			
+			if(width == view.bounds.width && height == view.bounds.height) return;
+			
+			view.resizeTo(width, height);
 		}
 		
 		/**
