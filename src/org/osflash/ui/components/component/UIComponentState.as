@@ -29,6 +29,11 @@ package org.osflash.ui.components.component
 		/**
 		 * @private
 		 */
+		private var _action : int;
+		
+		/**
+		 * @private
+		 */
 		private var _component : IUIComponent;
 		
 		/**
@@ -42,6 +47,8 @@ package org.osflash.ui.components.component
 			_hovered = false;
 			_focused = false;
 			_pressed = false;
+			
+			_action = UIComponentStateAction.ENABLED;
 		}
 		
 		/**
@@ -76,6 +83,10 @@ package org.osflash.ui.components.component
 			if (_enabled != value)
 			{
 				_enabled = value;
+				if(_enabled == value)
+					action |= UIComponentStateAction.ENABLED;
+				else 
+					action ^= UIComponentStateAction.ENABLED;
 				_signalProxy.enabled.dispatch(value);
 			}
 		}
@@ -89,6 +100,10 @@ package org.osflash.ui.components.component
 			if (_hovered != value)
 			{
 				_hovered = value;
+				if(_hovered == value)
+					action |= UIComponentStateAction.HOVERED;
+				else 
+					action ^= UIComponentStateAction.HOVERED;
 				_signalProxy.hovered.dispatch(value);
 			}
 		}
@@ -102,6 +117,10 @@ package org.osflash.ui.components.component
 			if (_focused != value)
 			{
 				_focused = value;
+				if(_focused == value)
+					action |= UIComponentStateAction.FOCUSED;
+				else 
+					action ^= UIComponentStateAction.FOCUSED;
 				_signalProxy.focused.dispatch(value);
 			}
 		}
@@ -115,7 +134,24 @@ package org.osflash.ui.components.component
 			if(_pressed != value)
 			{
 				_pressed = value;
+				if(_focused == value)
+					action |= UIComponentStateAction.PRESSED;
+				else 
+					action ^= UIComponentStateAction.PRESSED;
 				_signalProxy.pressed.dispatch(value);
+			}
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get action() : int { return _action; }
+		public function set action(value : int) : void
+		{
+			if(_action != value)
+			{
+				_action = value;
+				_signalProxy.action.dispatch(value);
 			}
 		}
 	}

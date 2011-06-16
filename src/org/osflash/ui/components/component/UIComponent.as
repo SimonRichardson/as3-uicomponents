@@ -1,10 +1,10 @@
 package org.osflash.ui.components.component
 {
-	import org.osflash.ui.components.errors.AbstractMethodError;
+	import flash.geom.Point;
 	import org.osflash.ui.display.UISprite;
+	import org.osflash.ui.errors.AbstractMethodError;
 	import org.osflash.ui.signals.ISignalTarget;
 
-	import flash.geom.Point;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
@@ -213,6 +213,12 @@ package org.osflash.ui.components.component
 		 */
 		public function get pressed() : Boolean { return state.pressed; }
 		public function set pressed(value : Boolean) : void { state.pressed = value; }
+		
+		/**
+		 * @private
+		 */
+		public function get action() : int { return state.action; }
+		public function set action(value : int) : void { state.action = value; }
 		
 		/**
 		 * @inheritDoc

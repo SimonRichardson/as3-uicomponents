@@ -1,11 +1,11 @@
-package org.osflash.ui.components.button
+package org.osflash.ui.components.text
 {
 	import org.osflash.ui.components.component.IUIComponent;
 	import org.osflash.ui.components.component.UIComponentModel;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIButtonModel extends UIComponentModel
+	public class UILabelModel extends UIComponentModel
 	{
 		
 		/**
@@ -16,14 +16,14 @@ package org.osflash.ui.components.button
 		/**
 		 * @private
 		 */
-		private var _component : UIButton;
+		private var _component : UILabel;
 		
 		/**
 		 * @private
 		 */
-		private var _signalProxy : UIButtonSignalProxy;
+		private var _signalProxy : UILabelSignalProxy;
 								
-		public function UIButtonModel(text : String = "")
+		public function UILabelModel(text : String = "")
 		{
 			super();
 			
@@ -37,8 +37,8 @@ package org.osflash.ui.components.button
 		{
 			super.bind(component);
 						
-			_component = UIButton(component);
-			_signalProxy = UIButtonSignalProxy(_component.signalProxy);
+			_component = UILabel(component);
+			_signalProxy = UILabelSignalProxy(_component.signalProxy);
 		}
 		
 		/**

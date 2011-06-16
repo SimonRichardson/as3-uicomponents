@@ -1,5 +1,6 @@
-package org.osflash.ui.components.component.graphic
+package org.osflash.ui.components.themes.graphic.component
 {
+	import org.osflash.ui.components.component.UIComponentStateAction;
 	import org.osflash.ui.components.component.IUIComponent;
 	import org.osflash.ui.components.component.UIComponentView;
 	import org.osflash.ui.signals.ISignalTarget;
@@ -71,12 +72,12 @@ package org.osflash.ui.components.component.graphic
 				const component : IUIComponent = IUIComponent(target);				
 				if(component.enabled) 
 				{
-					component.pressed = mouseDown;
-					component.hovered = true;
+					component.action |= UIComponentStateAction.HOVERED;
 				}
 			}
 			
 			mousePos;
+			mouseDown;
 		}
 		
 		/**
@@ -92,12 +93,12 @@ package org.osflash.ui.components.component.graphic
 				const component : IUIComponent = IUIComponent(target);				
 				if(component.enabled) 
 				{
-					component.pressed = mouseDown;
-					component.hovered = false;
+					component.action ^= UIComponentStateAction.HOVERED;
 				}
 			}
 			
 			mousePos;
+			mouseDown;
 		}
 		
 		/**
@@ -112,8 +113,7 @@ package org.osflash.ui.components.component.graphic
 				const component : IUIComponent = IUIComponent(target);				
 				if(component.enabled) 
 				{
-					component.hovered = false;
-					component.pressed = true;
+					component.action |= UIComponentStateAction.PRESSED;
 				}
 			}
 			
@@ -132,8 +132,7 @@ package org.osflash.ui.components.component.graphic
 				const component : IUIComponent = IUIComponent(target);				
 				if(component.enabled) 
 				{
-					component.hovered = false;
-					component.pressed = false;
+					component.action ^= UIComponentStateAction.PRESSED;
 				}
 			}
 			

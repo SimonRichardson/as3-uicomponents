@@ -1,10 +1,11 @@
-package org.osflash.ui.components.geom
+package org.osflash.ui.geom
 {
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIMargin
+	public final class UIPadding
 	{
+		
 		/**
 		 * @private
 		 */
@@ -25,7 +26,7 @@ package org.osflash.ui.components.geom
 		 */
 		private var _left : int;
 
-		public function UIMargin(	top : int = 0, 
+		public function UIPadding(	top : int = 0, 
 									right : int = 0, 
 									bottom : int = 0, 
 									left : int = 0
@@ -51,7 +52,7 @@ package org.osflash.ui.components.geom
 
 		public function toString() : String
 		{
-			return "[UIMargin (top:" + top + 
+			return "[UIPadding (top:" + top + 
 								", right:" + right + 
 								", bottom:" + bottom + 
 								", left:" + left + 

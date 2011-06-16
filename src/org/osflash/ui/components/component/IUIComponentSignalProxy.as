@@ -15,5 +15,7 @@ package org.osflash.ui.components.component
 		function get focused() : ISignal;
 
 		function get pressed() : ISignal;
+		
+		function get action() : ISignal;
 	}
 }

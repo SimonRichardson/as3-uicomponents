@@ -20,5 +20,8 @@ package org.osflash.ui.components.component
 
 		function get pressed() : Boolean;
 		function set pressed(value : Boolean) : void;
+		
+		function get action() : int;
+		function set action(value : int) : void;
 	}
 }

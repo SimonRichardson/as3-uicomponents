@@ -29,6 +29,11 @@ package org.osflash.ui.components.component
 		private const _pressed : ISignal = new Signal(Boolean);
 		
 		/**
+		 * @private
+		 */
+		private const _action : ISignal = new Signal(int);
+		
+		/**
 		 * @inheritDoc
 		 */
 		public function get enabled() : ISignal { return _enabled; }
@@ -47,5 +52,10 @@ package org.osflash.ui.components.component
 		 * @inheritDoc
 		 */
 		public function get pressed() : ISignal { return _pressed; }
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get action() : ISignal { return _action; }
 	}
 }

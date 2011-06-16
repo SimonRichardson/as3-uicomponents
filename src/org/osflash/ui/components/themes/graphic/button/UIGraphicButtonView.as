@@ -1,16 +1,17 @@
-package org.osflash.ui.components.button.graphic
+package org.osflash.ui.components.themes.graphic.button
 {
-	import org.osflash.ui.components.button.IUIButtonView;
-	import org.osflash.ui.components.button.UIButton;
-	import org.osflash.ui.components.button.UIButtonSignalProxy;
-	import org.osflash.ui.components.component.IUIComponent;
-	import org.osflash.ui.components.component.graphic.UIGraphicComponentView;
-	import org.osflash.ui.signals.ISignalTarget;
-
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.geom.Point;
+	import org.osflash.ui.components.button.IUIButtonView;
+	import org.osflash.ui.components.button.UIButton;
+	import org.osflash.ui.components.button.UIButtonSignalProxy;
+	import org.osflash.ui.components.component.IUIComponent;
+	import org.osflash.ui.components.component.UIComponentStateAction;
+	import org.osflash.ui.components.themes.graphic.component.UIGraphicComponentView;
+	import org.osflash.ui.signals.ISignalTarget;
+
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
@@ -63,10 +64,7 @@ package org.osflash.ui.components.button.graphic
 
 			_signalProxy = UIButtonSignalProxy(_component.signalProxy);
 			_signalProxy.textChanged.add(handleTextUpdateSignal);
-			_signalProxy.enabled.add(handleEnabledSignal);
-			_signalProxy.hovered.add(handleHoveredSignal);
-			_signalProxy.focused.add(handleFocusedSignal);
-			_signalProxy.pressed.add(handlePressedSignal);
+			_signalProxy.action.add(handleActionSignal);
 		}
 				
 		/**
@@ -87,10 +85,7 @@ package org.osflash.ui.components.button.graphic
 			if(null != _signalProxy)
 			{
 				_signalProxy.textChanged.remove(handleTextUpdateSignal);
-				_signalProxy.enabled.remove(handleEnabledSignal);
-				_signalProxy.hovered.remove(handleHoveredSignal);
-				_signalProxy.focused.remove(handleFocusedSignal);
-				_signalProxy.pressed.remove(handlePressedSignal);
+				_signalProxy.action.remove(handleActionSignal);
 				_signalProxy = null;
 			}
 			
@@ -104,7 +99,7 @@ package org.osflash.ui.components.button.graphic
 		{
 			if(!_container.visible || !_component.enabled) return null;
 			point = _container.globalToLocal(point);
-			return bounds.containsPoint(point) ? _component : null;
+			return innerBounds.containsPoint(point) ? _component : null;
 		}
 		
 		/**
@@ -141,35 +136,10 @@ package org.osflash.ui.components.button.graphic
 		/**
 		 * @private
 		 */
-		private function handleEnabledSignal(value : Boolean) : void
+		private function handleActionSignal(value : int) : void
 		{
-			
-		}
-		
-		/**
-		 * @private
-		 */
-		private function handleHoveredSignal(value : Boolean) : void
-		{
-			_colour = value ? 0xff00ff : 0xaa00aa;
-			
-			repaint();
-		}
-		
-		/**
-		 * @private
-		 */
-		private function handleFocusedSignal(value : Boolean) : void
-		{
-			
-		}
-		
-		/**
-		 * @private
-		 */
-		private function handlePressedSignal(value : Boolean) : void
-		{
-			_colour = value ? 0x00ffff : 0xaa00aa;
+			_colour = ((value & UIComponentStateAction.HOVERED) != 0) ? 0xff00ff : 0xaa00aa;
+			_colour = ((value & UIComponentStateAction.PRESSED) != 0) ? 0x00ffff : _colour;
 			
 			repaint();
 		}

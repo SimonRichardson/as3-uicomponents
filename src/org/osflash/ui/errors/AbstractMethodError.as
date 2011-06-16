@@ -1,4 +1,4 @@
-package org.osflash.ui.components.errors
+package org.osflash.ui.errors
 {
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk

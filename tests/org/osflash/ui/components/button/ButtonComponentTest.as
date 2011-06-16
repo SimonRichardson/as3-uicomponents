@@ -1,10 +1,10 @@
 package org.osflash.ui.components.button
 {
-	import org.osflash.ui.components.button.graphic.UIGraphicButtonView;
+	import flash.display.Stage;
 	import org.osflash.dom.element.IDOMDocument;
+	import org.osflash.ui.components.themes.graphic.button.UIGraphicButtonView;
 	import org.osflash.ui.display.UIDocument;
 
-	import flash.display.Stage;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
