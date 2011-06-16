@@ -92,6 +92,22 @@ package org.osflash.ui.components.component
 			_outerBounds.width = width + (_margin.left + _margin.right);
 			_outerBounds.height = height + (_margin.top + _margin.bottom);
 		}
+		
+		/**
+		 * @private
+		 */
+		protected function initConfig(config : IUIComponentViewConfig) : void
+		{
+			_margin.top = config.margin.top;
+			_margin.left = config.margin.left;
+			_margin.bottom = config.margin.bottom;
+			_margin.right = config.margin.right;
+			
+			_padding.top = config.padding.top;
+			_padding.left = config.padding.left;
+			_padding.bottom = config.padding.bottom;
+			_padding.right = config.padding.right;
+		}
 
 		/**
 		 * @inheritDoc

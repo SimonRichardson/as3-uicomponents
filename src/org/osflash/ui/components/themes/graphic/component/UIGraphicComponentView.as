@@ -21,7 +21,7 @@ package org.osflash.ui.components.themes.graphic.component
 		public function UIGraphicComponentView()
 		{
 		}
-
+		
 		/**
 		 * @inheritDoc
 		 */

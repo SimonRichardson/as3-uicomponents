@@ -1,16 +1,24 @@
 package org.osflash.ui.components.themes.graphic.button
 {
-	import flash.display.DisplayObjectContainer;
-	import flash.display.Graphics;
-	import flash.display.Shape;
-	import flash.geom.Point;
+	import org.osflash.ui.components.button.IUIButtonColourScheme;
 	import org.osflash.ui.components.button.IUIButtonView;
+	import org.osflash.ui.components.button.IUIButtonViewConfig;
 	import org.osflash.ui.components.button.UIButton;
 	import org.osflash.ui.components.button.UIButtonSignalProxy;
 	import org.osflash.ui.components.component.IUIComponent;
+	import org.osflash.ui.components.component.IUIComponentViewConfig;
 	import org.osflash.ui.components.component.UIComponentStateAction;
 	import org.osflash.ui.components.themes.graphic.component.UIGraphicComponentView;
 	import org.osflash.ui.signals.ISignalTarget;
+
+	import flash.display.DisplayObjectContainer;
+	import flash.display.Graphics;
+	import flash.display.GraphicsPath;
+	import flash.display.IGraphicsData;
+	import flash.display.IGraphicsFill;
+	import flash.display.Shape;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
@@ -41,13 +49,33 @@ package org.osflash.ui.components.themes.graphic.button
 		/**
 		 * @private
 		 */
-		private var _colour : int;
-				
-		public function UIGraphicButtonView()
+		private var _config : IUIButtonViewConfig;
+		
+		/**
+		 * @private
+		 */
+		private var _colourScheme : IUIButtonColourScheme;
+		
+		/**
+		 * @private
+		 */
+		private var _fillGraphicData : IGraphicsFill;
+		
+		/**
+		 * @private
+		 */
+		private var _graphicsData : Vector.<IGraphicsData>;
+		
+		/**
+		 * @private
+		 */
+		private var _graphicPath : GraphicsPath;
+		
+		public function UIGraphicButtonView(config : IUIButtonViewConfig)
 		{
 			super();
 			
-			_colour = 0xaa00aa;
+			_config = config;
 		}
 		
 		/**
@@ -57,6 +85,9 @@ package org.osflash.ui.components.themes.graphic.button
 		{
 			super.bind(component);
 			
+			_graphicPath = new GraphicsPath(new Vector.<int>(), new Vector.<Number>());
+			_graphicsData = new Vector.<IGraphicsData>();
+			
 			_component = UIButton(component);
 			
 			_container = _component.displayObjectContainer;
@@ -65,6 +96,8 @@ package org.osflash.ui.components.themes.graphic.button
 			_signalProxy = UIButtonSignalProxy(_component.signalProxy);
 			_signalProxy.textChanged.add(handleTextUpdateSignal);
 			_signalProxy.action.add(handleActionSignal);
+			
+			initConfig(_config);
 		}
 				
 		/**
@@ -109,7 +142,28 @@ package org.osflash.ui.components.themes.graphic.button
 		{
 			super.resizeTo(width, height);
 			
+			_graphicPath.commands.length = 0;
+			_graphicPath.data.length = 0;
+			
+			const bounds : Rectangle = innerBounds;
+			_graphicPath.moveTo(bounds.x, bounds.y);
+			_graphicPath.lineTo(bounds.x + bounds.width, bounds.y);
+			_graphicPath.lineTo(bounds.x + bounds.width, bounds.y + bounds.height);
+			_graphicPath.lineTo(bounds.x, bounds.y + bounds.height);
+			
 			repaint();
+		}
+		
+		/**
+		 * @private
+		 */	
+		override protected function initConfig(config : IUIComponentViewConfig) : void
+		{
+			super.initConfig(config);
+			
+			_colourScheme = _config.colourScheme;
+			
+			_fillGraphicData = _colourScheme.up;
 		}
 		
 		/**
@@ -118,11 +172,13 @@ package org.osflash.ui.components.themes.graphic.button
 		protected function repaint() : void
 		{
 			const graphics : Graphics = _background.graphics;
+			
+			_graphicsData.length = 0;
+			_graphicsData.push(_fillGraphicData);
+			_graphicsData.push(_graphicPath);
+			
 			graphics.clear();
-			graphics.beginFill(_colour, 0.5);
-			graphics.lineStyle(1, _colour, 0.8);
-			graphics.drawRoundRect(bounds.x, bounds.y, bounds.width, bounds.height, 15, 15);
-			graphics.endFill();
+			graphics.drawGraphicsData(_graphicsData);
 		}
 		
 		/**
@@ -138,9 +194,16 @@ package org.osflash.ui.components.themes.graphic.button
 		 */
 		private function handleActionSignal(value : int) : void
 		{
-			_colour = ((value & UIComponentStateAction.HOVERED) != 0) ? 0xff00ff : 0xaa00aa;
-			_colour = ((value & UIComponentStateAction.PRESSED) != 0) ? 0x00ffff : _colour;
-			
+			if((value & UIComponentStateAction.PRESSED) != 0)
+				_fillGraphicData = _colourScheme.down;
+			else 
+			{
+				if((value & UIComponentStateAction.HOVERED) != 0)
+					_fillGraphicData = _colourScheme.over;
+				else
+					_fillGraphicData = _colourScheme.up;
+			}
+						
 			repaint();
 		}
 	}
