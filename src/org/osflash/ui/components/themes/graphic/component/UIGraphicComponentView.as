@@ -16,6 +16,12 @@ package org.osflash.ui.components.themes.graphic.component
 		/**
 		 * @private
 		 */
+		private static const _graphics : UIGraphicComponentGraphics = 
+																new UIGraphicComponentGraphics();
+
+		/**
+		 * @private
+		 */
 		private var _component : IUIComponent;
 
 		public function UIGraphicComponentView()
@@ -137,6 +143,11 @@ package org.osflash.ui.components.themes.graphic.component
 			}
 			
 			mousePos;
+		}
+		
+		public function get graphics() : UIGraphicComponentGraphics
+		{
+			return _graphics;
 		}
 	}
 }
