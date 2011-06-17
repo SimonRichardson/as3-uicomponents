@@ -1,11 +1,12 @@
 package org.osflash.ui.components.themes.graphic.analog
 {
+	import org.osflash.ui.components.button.IUIButtonView;
 	import org.osflash.ui.components.button.UIButton;
-	import org.osflash.ui.components.analog.IUIAnalogStickView;
-	import org.osflash.ui.components.analog.UIAnalogStick;
-	import org.osflash.ui.components.analog.UIAnalogStickSignalProxy;
+	import org.osflash.ui.components.button.UIButtonSignalProxy;
 	import org.osflash.ui.components.component.IUIComponent;
 	import org.osflash.ui.components.component.UIComponentStateAction;
+	import org.osflash.ui.components.themes.graphic.button.IUIButtonColourScheme;
+	import org.osflash.ui.components.themes.graphic.button.IUIButtonViewConfig;
 	import org.osflash.ui.components.themes.graphic.component.IUIComponentViewConfig;
 	import org.osflash.ui.components.themes.graphic.component.UIGraphicComponentView;
 	import org.osflash.ui.components.themes.graphic.component.UIGraphicsData;
@@ -14,18 +15,17 @@ package org.osflash.ui.components.themes.graphic.analog
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Shape;
 	import flash.geom.Point;
-
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIGraphicAnalogStickView extends UIGraphicComponentView 
-															implements IUIAnalogStickView
+	public class UIGraphicAnalogStickButtonView extends UIGraphicComponentView 
+																	implements IUIButtonView
 	{
 		
 		/**
 		 * @private
 		 */
-		private var _component : UIAnalogStick;
+		private var _component : UIButton;
 		
 		/**
 		 * @private
@@ -35,7 +35,7 @@ package org.osflash.ui.components.themes.graphic.analog
 		/**
 		 * @private
 		 */
-		private var _signalProxy : UIAnalogStickSignalProxy;
+		private var _signalProxy : UIButtonSignalProxy;
 		
 		/**
 		 * @private
@@ -45,24 +45,19 @@ package org.osflash.ui.components.themes.graphic.analog
 		/**
 		 * @private
 		 */
-		private var _button : UIButton;
+		private var _config : IUIButtonViewConfig;
 		
 		/**
 		 * @private
 		 */
-		private var _config : IUIAnalogStickViewConfig;
-		
-		/**
-		 * @private
-		 */
-		private var _colourScheme : IUIAnalogStickColourScheme;
+		private var _colourScheme : IUIButtonColourScheme;
 		
 		/**
 		 * @private
 		 */
 		private var _graphicsData : UIGraphicsData;
 				
-		public function UIGraphicAnalogStickView(config : IUIAnalogStickViewConfig)
+		public function UIGraphicAnalogStickButtonView(config : IUIButtonViewConfig)
 		{
 			super();
 			
@@ -76,13 +71,12 @@ package org.osflash.ui.components.themes.graphic.analog
 		{
 			super.bind(component);
 						
-			_component = UIAnalogStick(component);
+			_component = UIButton(component);
 			
 			_container = _component.displayObjectContainer;
 			_container.addChild(_background = new Shape());
-			_component.add(_button = new UIButton(_config.buttonView));
 
-			_signalProxy = UIAnalogStickSignalProxy(_component.signalProxy);
+			_signalProxy = UIButtonSignalProxy(_component.signalProxy);
 			_signalProxy.action.add(handleActionSignal);
 			
 			initConfig(_config);
@@ -103,13 +97,6 @@ package org.osflash.ui.components.themes.graphic.analog
 				_background = null;
 			}
 			
-			if(null != _button)
-			{
-				if(_component.contains(_button))
-					_component.remove(_button);
-				_button = null;
-			}
-			
 			if(null != _signalProxy)
 			{
 				_signalProxy.action.remove(handleActionSignal);
@@ -125,7 +112,6 @@ package org.osflash.ui.components.themes.graphic.analog
 		override public function captureTarget(point : Point) : ISignalTarget
 		{
 			if(!_container.visible || !_component.enabled) return null;
-			if(_button.captureTarget(point)) return _button;
 			point = _container.globalToLocal(point);
 			return innerBounds.containsPoint(point) ? _component : null;
 		}
@@ -136,9 +122,6 @@ package org.osflash.ui.components.themes.graphic.analog
 		override public function resizeTo(width : int, height : int) : void
 		{
 			super.resizeTo(width, height);
-			
-			_button.width = width * 0.33;
-			_button.height = height * 0.33;
 						
 			repaint();
 		}
@@ -152,7 +135,7 @@ package org.osflash.ui.components.themes.graphic.analog
 			
 			_colourScheme = _config.colourScheme;
 			
-			//_graphicsData = _colourScheme.up;
+			_graphicsData = _colourScheme.up;
 		}
 		
 		/**
@@ -160,20 +143,19 @@ package org.osflash.ui.components.themes.graphic.analog
 		 */
 		protected function repaint() : void
 		{
-			//graphics.context(_background.graphics);
+			graphics.context(_background.graphics);
 			
-			//graphics.clear();
-			//graphics.style(_graphicsData);
-			//graphics.drawRectangle(innerBounds);
-			//graphics.endFill();
+			graphics.clear();
+			graphics.style(_graphicsData);
+			graphics.drawRectangle(innerBounds);
+			graphics.endFill();
 		}
-		
+				
 		/**
 		 * @private
 		 */
 		protected function handleActionSignal(value : int) : void
 		{
-			/*
 			if((value & UIComponentStateAction.PRESSED) != 0)
 				_graphicsData = _colourScheme.down;
 			else 
@@ -185,8 +167,6 @@ package org.osflash.ui.components.themes.graphic.analog
 			}
 						
 			repaint();
-			 * 
-			 */
 		}
 	}
 }

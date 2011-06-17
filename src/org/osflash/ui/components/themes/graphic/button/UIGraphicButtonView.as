@@ -155,7 +155,7 @@ package org.osflash.ui.components.themes.graphic.button
 		/**
 		 * @private
 		 */
-		private function handleTextUpdateSignal(value : String) : void
+		protected function handleTextUpdateSignal(value : String) : void
 		{
 			
 		}
@@ -163,7 +163,7 @@ package org.osflash.ui.components.themes.graphic.button
 		/**
 		 * @private
 		 */
-		private function handleActionSignal(value : int) : void
+		protected function handleActionSignal(value : int) : void
 		{
 			if((value & UIComponentStateAction.PRESSED) != 0)
 				_graphicsData = _colourScheme.down;
