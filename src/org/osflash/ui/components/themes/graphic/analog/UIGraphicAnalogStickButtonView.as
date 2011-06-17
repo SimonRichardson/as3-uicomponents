@@ -56,6 +56,11 @@ package org.osflash.ui.components.themes.graphic.analog
 		 * @private
 		 */
 		private var _graphicsData : UIGraphicsData;
+		
+		/**
+		 * @private
+		 */
+		private var _radius : int;
 				
 		public function UIGraphicAnalogStickButtonView(config : IUIButtonViewConfig)
 		{
@@ -112,8 +117,13 @@ package org.osflash.ui.components.themes.graphic.analog
 		override public function captureTarget(point : Point) : ISignalTarget
 		{
 			if(!_container.visible || !_component.enabled) return null;
-			point = _container.globalToLocal(point);
-			return innerBounds.containsPoint(point) ? _component : null;
+			
+			const local : Point = _container.globalToLocal(point);
+			const dx : Number = local.x - _radius;
+			const dy : Number = local.y - _radius;
+			
+			const distance : Number = Math.sqrt((dx * dx) + (dy * dy));
+			return (distance <= _radius) ? _component : null;
 		}
 		
 		/**
@@ -122,6 +132,8 @@ package org.osflash.ui.components.themes.graphic.analog
 		override public function resizeTo(width : int, height : int) : void
 		{
 			super.resizeTo(width, height);
+						
+			_radius = innerBounds.width * 0.5;
 						
 			repaint();
 		}
@@ -136,6 +148,8 @@ package org.osflash.ui.components.themes.graphic.analog
 			_colourScheme = _config.colourScheme;
 			
 			_graphicsData = _colourScheme.up;
+			
+			_radius = 0;
 		}
 		
 		/**
@@ -147,7 +161,7 @@ package org.osflash.ui.components.themes.graphic.analog
 			
 			graphics.clear();
 			graphics.style(_graphicsData);
-			graphics.drawRectangle(innerBounds);
+			graphics.drawCircle(innerBounds.x + _radius, innerBounds.y + _radius, _radius);
 			graphics.endFill();
 		}
 				

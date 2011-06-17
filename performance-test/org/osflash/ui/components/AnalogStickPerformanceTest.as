@@ -20,20 +20,21 @@ package org.osflash.ui.components
 		{
 			document = new UIDocument(stage, true);
 			
-			const config : UIGraphicAnalogStickConfig = new UIGraphicAnalogStickConfig();
-			
-			for(var i : int = 0; i<1; i++)
+			for(var i : int = 0; i<10; i++)
 			{
+				const config : UIGraphicAnalogStickConfig = new UIGraphicAnalogStickConfig();
 				const view : UIGraphicAnalogStickView = new UIGraphicAnalogStickView(config);
-				const button : UIAnalogStick = new UIAnalogStick(view);
+				const analogStick : UIAnalogStick = new UIAnalogStick(view);
 				
-				button.width = 100;
-				button.height = 75;
+				const size : int = (Math.random() * 300) + 50;
 				
-				button.x = (Math.random() * (800 - button.width));
-				button.y = (Math.random() * (800 - button.height));
+				analogStick.width = size;
+				analogStick.height = size;
 				
-				document.add(button);
+				analogStick.x = (Math.random() * (800 - analogStick.width));
+				analogStick.y = (Math.random() * (800 - analogStick.height));
+				
+				document.add(analogStick);
 			}
 			
 			document.invalidate();

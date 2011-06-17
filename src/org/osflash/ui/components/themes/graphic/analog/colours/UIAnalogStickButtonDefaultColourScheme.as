@@ -28,9 +28,9 @@ package org.osflash.ui.components.themes.graphic.analog.colours
 
 		public function UIAnalogStickButtonDefaultColourScheme()
 		{
-			_up = new UIGraphicsData(new GraphicsSolidFill(0xbb00bb, 0.5));
-			_over = new UIGraphicsData(new GraphicsSolidFill(0xff00ff, 0.5));
-			_down = new UIGraphicsData(new GraphicsSolidFill(0xffffff, 0.75));
+			_up = new UIGraphicsData(new GraphicsSolidFill(0xbb00bb, 1));
+			_over = new UIGraphicsData(new GraphicsSolidFill(0xff00ff, 1));
+			_down = new UIGraphicsData(new GraphicsSolidFill(0x00ffff, 1));
 		}
 		
 		/**

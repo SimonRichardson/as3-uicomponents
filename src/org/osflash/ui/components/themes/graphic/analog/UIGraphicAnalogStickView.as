@@ -1,9 +1,11 @@
 package org.osflash.ui.components.themes.graphic.analog
 {
-	import org.osflash.ui.components.button.UIButton;
+	import org.osflash.signals.ISignal;
+	import org.osflash.signals.natives.NativeSignal;
 	import org.osflash.ui.components.analog.IUIAnalogStickView;
 	import org.osflash.ui.components.analog.UIAnalogStick;
 	import org.osflash.ui.components.analog.UIAnalogStickSignalProxy;
+	import org.osflash.ui.components.button.UIButton;
 	import org.osflash.ui.components.component.IUIComponent;
 	import org.osflash.ui.components.component.UIComponentStateAction;
 	import org.osflash.ui.components.themes.graphic.component.IUIComponentViewConfig;
@@ -13,6 +15,7 @@ package org.osflash.ui.components.themes.graphic.analog
 
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Shape;
+	import flash.events.Event;
 	import flash.geom.Point;
 
 	/**
@@ -61,6 +64,31 @@ package org.osflash.ui.components.themes.graphic.analog
 		 * @private
 		 */
 		private var _graphicsData : UIGraphicsData;
+		
+		/**
+		 * @private
+		 */
+		private var _radius : int;
+		
+		/**
+		 * @private
+		 */
+		private var _buttonTarget : Point;
+		
+		/**
+		 * @private
+		 */
+		private var _buttonMouseDown : Boolean;
+		
+		/**
+		 * @private
+		 */
+		private var _buttonMouseDownPos : Point;
+		
+		/**
+		 * @private
+		 */
+		private var _nativeEnterFrameSignal : ISignal;
 				
 		public function UIGraphicAnalogStickView(config : IUIAnalogStickViewConfig)
 		{
@@ -86,6 +114,15 @@ package org.osflash.ui.components.themes.graphic.analog
 			_signalProxy.action.add(handleActionSignal);
 			
 			initConfig(_config);
+			
+			_buttonTarget = new Point();
+			_buttonMouseDown = false;
+			_buttonMouseDownPos = new Point();
+			
+			_nativeEnterFrameSignal = new NativeSignal(_container, Event.ENTER_FRAME);
+			
+			_button.signals.mouseDownSignal.add(handlebuttonMouseDownSignal);
+			_button.signals.mouseUpSignal.add(handlebuttonMouseUpSignal);
 		}
 				
 		/**
@@ -137,9 +174,16 @@ package org.osflash.ui.components.themes.graphic.analog
 		{
 			super.resizeTo(width, height);
 			
-			_button.width = width * 0.33;
-			_button.height = height * 0.33;
-						
+			_radius = width * 0.5;
+			
+			_button.width = width * 0.5;
+			_button.height = height * 0.5;
+			
+			const radius : int = _button.width * 0.5;
+			
+			_button.x = (_radius - radius);
+			_button.y = (_radius - radius);
+			
 			repaint();
 		}
 		
@@ -152,7 +196,7 @@ package org.osflash.ui.components.themes.graphic.analog
 			
 			_colourScheme = _config.colourScheme;
 			
-			//_graphicsData = _colourScheme.up;
+			_graphicsData = _colourScheme.up;
 		}
 		
 		/**
@@ -160,12 +204,13 @@ package org.osflash.ui.components.themes.graphic.analog
 		 */
 		protected function repaint() : void
 		{
-			//graphics.context(_background.graphics);
+			graphics.context(_background.graphics);
 			
-			//graphics.clear();
-			//graphics.style(_graphicsData);
-			//graphics.drawRectangle(innerBounds);
-			//graphics.endFill();
+			graphics.clear();
+			graphics.style(_graphicsData);
+			graphics.drawCircle(innerBounds.x + _radius, innerBounds.y + _radius, _radius);
+			graphics.endFill();
+			
 		}
 		
 		/**
@@ -173,7 +218,6 @@ package org.osflash.ui.components.themes.graphic.analog
 		 */
 		protected function handleActionSignal(value : int) : void
 		{
-			/*
 			if((value & UIComponentStateAction.PRESSED) != 0)
 				_graphicsData = _colourScheme.down;
 			else 
@@ -185,8 +229,102 @@ package org.osflash.ui.components.themes.graphic.analog
 			}
 						
 			repaint();
-			 * 
-			 */
+		}
+		
+		/**
+		 * @private
+		 */
+		private function handlebuttonMouseDownSignal(	target : ISignalTarget, 
+														mousePos : Point
+														) : void
+		{
+			if(target != _button) return;
+			
+			_buttonMouseDown = true;
+			
+			const radius : int = _button.width * 0.5;
+			const offset : Number = _radius - radius;
+			
+			_buttonMouseDownPos = _button.displayObject.globalToLocal(mousePos);
+			_buttonMouseDownPos.x -= offset;
+			_buttonMouseDownPos.y -= offset;
+						
+			_nativeEnterFrameSignal.add(handleEnterFrameSignal);
+		}
+		
+		/**
+		 * @private
+		 */
+		private function handleEnterFrameSignal(event : Event) : void
+		{
+			const radius : int = _button.width * 0.5;
+			const offset : Number = _radius - radius;
+			
+			if(_buttonMouseDown)
+			{
+				// Work out the distance
+				const o : Number = offset * 2;
+				const dx : Number = (_container.mouseX - _buttonMouseDownPos.x) - o;
+				const dy : Number = (_container.mouseY - _buttonMouseDownPos.y) - o;
+				const distance : Number = Math.sqrt((dx * dx) + (dy * dy));
+				
+				// Limit the distance			
+				const r : Number = distance <= radius ? distance : radius;
+				
+				// Work out the rotation (polar)
+				const theta : Number = Math.atan2(dy, dx);
+				
+				// Put it back (cartesian)
+				_buttonTarget.x = (Math.cos(theta) * r) + offset;
+				_buttonTarget.y = (Math.sin(theta) * r) + offset;
+				
+				_button.x += (_buttonTarget.x - _button.x) * 0.5;
+				_button.y += (_buttonTarget.y - _button.y) * 0.5;
+			}
+			else
+			{
+				// TODO : Swap this for an easing equation.
+				_button.displayObject.x += (offset - _button.displayObject.x) * 0.5;
+				_button.displayObject.y += (offset - _button.displayObject.y) * 0.5;
+				
+				const x : Number = (_button.displayObject.x - offset);
+				const y : Number = (_button.displayObject.y - offset);
+				const absx : Number = x < 0 ? -x : x;
+				const absy : Number = y < 0 ? -x : y;
+				
+				if(absx <= 0.2 && absy <= 0.2)
+				{
+					_button.displayObject.x = offset;
+					_button.displayObject.y = offset;
+					
+					_nativeEnterFrameSignal.remove(handleEnterFrameSignal);
+				}
+			}
+		}
+		
+		/**
+		 * @private
+		 */
+		private function handlebuttonMouseUpSignal(		target : ISignalTarget, 
+														mousePos : Point
+														) : void
+		{
+			_buttonMouseDown = false;
+			
+			target;
+			mousePos;
+		}
+		
+		/**
+		 * @private
+		 */	
+		override protected function handleMouseUpSignal(	target : ISignalTarget, 
+															mousePos : Point
+															) : void
+		{
+			super.handleMouseUpSignal(target, mousePos);
+			
+			_buttonMouseDown = false;
 		}
 	}
 }
