@@ -1,9 +1,9 @@
 package org.osflash.ui.components.themes.graphic.button.colours
 {
 	import flash.display.GraphicsSolidFill;
-	import org.osflash.ui.components.button.IUIButtonColourScheme;
-
 	import flash.display.IGraphicsFill;
+	import org.osflash.ui.components.themes.graphic.button.IUIButtonColourScheme;
+
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */

@@ -1,8 +1,6 @@
 package org.osflash.ui.components.themes.graphic.button
 {
 	import org.osflash.ui.components.themes.graphic.button.colours.DefaultColourScheme;
-	import org.osflash.ui.components.button.IUIButtonColourScheme;
-	import org.osflash.ui.components.button.IUIButtonViewConfig;
 	import org.osflash.ui.components.themes.graphic.component.UIGraphicComponentConfig;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk

@@ -2,6 +2,7 @@ package org.osflash.ui.components.component
 {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import org.osflash.ui.components.themes.graphic.component.IUIComponentViewConfig;
 	import org.osflash.ui.errors.AbstractMethodError;
 	import org.osflash.ui.geom.UIMargin;
 	import org.osflash.ui.geom.UIPadding;

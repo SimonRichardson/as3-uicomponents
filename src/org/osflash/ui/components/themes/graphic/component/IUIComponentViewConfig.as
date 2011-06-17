@@ -1,4 +1,4 @@
-package org.osflash.ui.components.component
+package org.osflash.ui.components.themes.graphic.component
 {
 	import org.osflash.ui.geom.UIMargin;
 	import org.osflash.ui.geom.UIPadding;

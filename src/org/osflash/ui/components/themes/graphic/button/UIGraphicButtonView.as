@@ -1,20 +1,18 @@
 package org.osflash.ui.components.themes.graphic.button
 {
-	import org.osflash.ui.components.button.IUIButtonColourScheme;
-	import org.osflash.ui.components.button.IUIButtonView;
-	import org.osflash.ui.components.button.IUIButtonViewConfig;
-	import org.osflash.ui.components.button.UIButton;
-	import org.osflash.ui.components.button.UIButtonSignalProxy;
-	import org.osflash.ui.components.component.IUIComponent;
-	import org.osflash.ui.components.component.IUIComponentViewConfig;
-	import org.osflash.ui.components.component.UIComponentStateAction;
-	import org.osflash.ui.components.themes.graphic.component.UIGraphicComponentView;
-	import org.osflash.ui.signals.ISignalTarget;
-
 	import flash.display.DisplayObjectContainer;
 	import flash.display.IGraphicsFill;
 	import flash.display.Shape;
 	import flash.geom.Point;
+	import org.osflash.ui.components.button.IUIButtonView;
+	import org.osflash.ui.components.button.UIButton;
+	import org.osflash.ui.components.button.UIButtonSignalProxy;
+	import org.osflash.ui.components.component.IUIComponent;
+	import org.osflash.ui.components.component.UIComponentStateAction;
+	import org.osflash.ui.components.themes.graphic.component.IUIComponentViewConfig;
+	import org.osflash.ui.components.themes.graphic.component.UIGraphicComponentView;
+	import org.osflash.ui.signals.ISignalTarget;
+
 
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk

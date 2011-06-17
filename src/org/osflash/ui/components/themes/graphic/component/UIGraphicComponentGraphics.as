@@ -54,6 +54,11 @@ package org.osflash.ui.components.themes.graphic.component
 		 * @private
 		 */
 		private const _lineToCommand : int = GraphicsPathCommand.LINE_TO;
+		
+		/**
+		 * @private
+		 */
+		private const _curveToCommand : int = GraphicsPathCommand.CURVE_TO;
 
 		public function UIGraphicComponentGraphics()
 		{
@@ -133,6 +138,34 @@ package org.osflash.ui.components.themes.graphic.component
 									value.x, value.y + value.height,
 									value.x, value.y
 									);
+		}
+		
+		public function drawCircle(x : Number, y : Number, radius : Number) : void
+		{
+			_graphicPath.commands.push(	_moveToCommand, 
+										_curveToCommand, 
+										_curveToCommand, 
+										_curveToCommand,
+										_curveToCommand,
+										_curveToCommand,
+										_curveToCommand,
+										_curveToCommand,
+										_curveToCommand
+										);
+			
+			const u : Number = radius * 0.4086;
+			const v : Number = radius * 0.7071;
+			
+			_graphicPath.data.push(	x - radius, y,
+									x - radius, y - u, x - v, y - v,
+									x - u, y - radius, x, y - radius,
+									x + u, y - radius, x + v, y - v,
+									x + radius, y - u, x + radius, y,
+									x + radius, y + u, x + v, y + v,
+									x + u, y + radius, x, y + radius,
+									x - u, y + radius, x - v, y + v,
+									x - radius, y + u, x - radius, y
+									);			
 		}
 		
 		public function endFill() : void

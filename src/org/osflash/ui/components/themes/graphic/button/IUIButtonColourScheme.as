@@ -1,4 +1,4 @@
-package org.osflash.ui.components.button
+package org.osflash.ui.components.themes.graphic.button
 {
 	import flash.display.IGraphicsFill;
 	/**

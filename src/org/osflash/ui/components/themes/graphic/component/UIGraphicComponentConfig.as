@@ -1,8 +1,7 @@
 package org.osflash.ui.components.themes.graphic.component
 {
-	import org.osflash.ui.geom.UIPadding;
 	import org.osflash.ui.geom.UIMargin;
-	import org.osflash.ui.components.component.IUIComponentViewConfig;
+	import org.osflash.ui.geom.UIPadding;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */

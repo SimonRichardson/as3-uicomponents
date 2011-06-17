@@ -1,15 +1,5 @@
 package org.osflash.ui.components.themes.graphic.analog
 {
-	import org.osflash.ui.components.analog.IUIAnalogStickColourScheme;
-	import org.osflash.ui.components.analog.IUIAnalogStickViewConfig;
-	import org.osflash.ui.components.analog.UIAnalogStick;
-	import org.osflash.ui.components.analog.UIAnalogStickSignalProxy;
-	import org.osflash.ui.components.button.IUIButtonView;
-	import org.osflash.ui.components.component.IUIComponent;
-	import org.osflash.ui.components.component.IUIComponentViewConfig;
-	import org.osflash.ui.components.themes.graphic.component.UIGraphicComponentView;
-	import org.osflash.ui.signals.ISignalTarget;
-
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Graphics;
 	import flash.display.GraphicsPath;
@@ -18,6 +8,14 @@ package org.osflash.ui.components.themes.graphic.analog
 	import flash.display.Shape;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import org.osflash.ui.components.analog.UIAnalogStick;
+	import org.osflash.ui.components.analog.UIAnalogStickSignalProxy;
+	import org.osflash.ui.components.button.IUIButtonView;
+	import org.osflash.ui.components.component.IUIComponent;
+	import org.osflash.ui.components.themes.graphic.component.IUIComponentViewConfig;
+	import org.osflash.ui.components.themes.graphic.component.UIGraphicComponentView;
+	import org.osflash.ui.signals.ISignalTarget;
+
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
