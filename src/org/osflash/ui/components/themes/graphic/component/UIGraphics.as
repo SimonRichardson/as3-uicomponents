@@ -6,13 +6,12 @@ package org.osflash.ui.components.themes.graphic.component
 	import flash.display.GraphicsStroke;
 	import flash.display.IGraphicsData;
 	import flash.display.IGraphicsFill;
-	import flash.display.IGraphicsStroke;
 	import flash.errors.IllegalOperationError;
 	import flash.geom.Rectangle;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIGraphicComponentGraphics
+	public class UIGraphics
 	{
 		
 		/**
@@ -28,7 +27,7 @@ package org.osflash.ui.components.themes.graphic.component
 		/**
 		 * @private
 		 */
-		private var _lineStrokeGraphicData : IGraphicsStroke;
+		private var _lineStrokeGraphicData : GraphicsStroke;
 		
 		/**
 		 * @private
@@ -60,7 +59,7 @@ package org.osflash.ui.components.themes.graphic.component
 		 */
 		private const _curveToCommand : int = GraphicsPathCommand.CURVE_TO;
 
-		public function UIGraphicComponentGraphics()
+		public function UIGraphics()
 		{
 			_graphicPath = new GraphicsPath(new Vector.<int>(), new Vector.<Number>());
 			_graphicsData = new Vector.<IGraphicsData>();
@@ -86,6 +85,14 @@ package org.osflash.ui.components.themes.graphic.component
 			if(null == value) throw new ArgumentError('Graphics can not be null');
 			
 			_graphics = value;
+		}
+		
+		public function style(value : UIGraphicsData) : void
+		{
+			if(null == value) throw new ArgumentError('UIGraphicsData can not be null');
+			
+			if(null != value.fillStyle) beginFill(value.fillStyle);
+			if(null != value.lineStyle) lineStyle(value.lineStyle, value.lineFillStyle);
 		}
 		
 		public function beginFill(value : IGraphicsFill) : void
@@ -189,6 +196,5 @@ package org.osflash.ui.components.themes.graphic.component
 		{
 			return _graphicPath;
 		}
-
 	}
 }

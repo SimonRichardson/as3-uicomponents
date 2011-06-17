@@ -1,6 +1,6 @@
 package org.osflash.ui.components.themes.graphic.button
 {
-	import org.osflash.ui.components.themes.graphic.button.colours.DefaultColourScheme;
+	import org.osflash.ui.components.themes.graphic.button.colours.UIButtonDefaultColourScheme;
 	import org.osflash.ui.components.themes.graphic.component.UIGraphicComponentConfig;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
@@ -16,7 +16,7 @@ package org.osflash.ui.components.themes.graphic.button
 		
 		public function UIGraphicButtonConfig(colourScheme : IUIButtonColourScheme = null)
 		{
-			_colourScheme = colourScheme || new DefaultColourScheme();
+			_colourScheme = colourScheme || new UIButtonDefaultColourScheme();
 		}
 		
 		/**

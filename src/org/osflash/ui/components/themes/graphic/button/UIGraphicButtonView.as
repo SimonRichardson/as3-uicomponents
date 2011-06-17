@@ -1,9 +1,5 @@
 package org.osflash.ui.components.themes.graphic.button
 {
-	import flash.display.DisplayObjectContainer;
-	import flash.display.IGraphicsFill;
-	import flash.display.Shape;
-	import flash.geom.Point;
 	import org.osflash.ui.components.button.IUIButtonView;
 	import org.osflash.ui.components.button.UIButton;
 	import org.osflash.ui.components.button.UIButtonSignalProxy;
@@ -11,7 +7,12 @@ package org.osflash.ui.components.themes.graphic.button
 	import org.osflash.ui.components.component.UIComponentStateAction;
 	import org.osflash.ui.components.themes.graphic.component.IUIComponentViewConfig;
 	import org.osflash.ui.components.themes.graphic.component.UIGraphicComponentView;
+	import org.osflash.ui.components.themes.graphic.component.UIGraphicsData;
 	import org.osflash.ui.signals.ISignalTarget;
+
+	import flash.display.DisplayObjectContainer;
+	import flash.display.Shape;
+	import flash.geom.Point;
 
 
 	/**
@@ -53,7 +54,7 @@ package org.osflash.ui.components.themes.graphic.button
 		/**
 		 * @private
 		 */
-		private var _fillGraphicData : IGraphicsFill;
+		private var _graphicsData : UIGraphicsData;
 				
 		public function UIGraphicButtonView(config : IUIButtonViewConfig)
 		{
@@ -135,7 +136,7 @@ package org.osflash.ui.components.themes.graphic.button
 			
 			_colourScheme = _config.colourScheme;
 			
-			_fillGraphicData = _colourScheme.up;
+			_graphicsData = _colourScheme.up;
 		}
 		
 		/**
@@ -146,7 +147,7 @@ package org.osflash.ui.components.themes.graphic.button
 			graphics.context(_background.graphics);
 			
 			graphics.clear();
-			graphics.beginFill(_fillGraphicData);
+			graphics.style(_graphicsData);
 			graphics.drawRectangle(innerBounds);
 			graphics.endFill();
 		}
@@ -165,13 +166,13 @@ package org.osflash.ui.components.themes.graphic.button
 		private function handleActionSignal(value : int) : void
 		{
 			if((value & UIComponentStateAction.PRESSED) != 0)
-				_fillGraphicData = _colourScheme.down;
+				_graphicsData = _colourScheme.down;
 			else 
 			{
 				if((value & UIComponentStateAction.HOVERED) != 0)
-					_fillGraphicData = _colourScheme.over;
+					_graphicsData = _colourScheme.over;
 				else
-					_fillGraphicData = _colourScheme.up;
+					_graphicsData = _colourScheme.up;
 			}
 						
 			repaint();
