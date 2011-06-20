@@ -76,7 +76,7 @@ package org.osflash.ui.components.themes.graphic.button
 			_container.addChild(_background = new Shape());
 
 			_signalProxy = UIButtonSignalProxy(_component.signalProxy);
-			_signalProxy.textChanged.add(handleTextUpdateSignal);
+			_signalProxy.text.add(handleTextUpdateSignal);
 			_signalProxy.action.add(handleActionSignal);
 			
 			initConfig(_config);
@@ -99,7 +99,7 @@ package org.osflash.ui.components.themes.graphic.button
 			
 			if(null != _signalProxy)
 			{
-				_signalProxy.textChanged.remove(handleTextUpdateSignal);
+				_signalProxy.text.remove(handleTextUpdateSignal);
 				_signalProxy.action.remove(handleActionSignal);
 				_signalProxy = null;
 			}
@@ -136,7 +136,7 @@ package org.osflash.ui.components.themes.graphic.button
 			
 			_colourScheme = _config.colourScheme;
 			
-			_graphicsData = _colourScheme.up;
+			_graphicsData = _colourScheme.backgroundUp;
 		}
 		
 		/**
@@ -166,13 +166,13 @@ package org.osflash.ui.components.themes.graphic.button
 		protected function handleActionSignal(value : int) : void
 		{
 			if((value & UIComponentStateAction.PRESSED) != 0)
-				_graphicsData = _colourScheme.down;
+				_graphicsData = _colourScheme.backgroundDown;
 			else 
 			{
 				if((value & UIComponentStateAction.HOVERED) != 0)
-					_graphicsData = _colourScheme.over;
+					_graphicsData = _colourScheme.backgroundOver;
 				else
-					_graphicsData = _colourScheme.up;
+					_graphicsData = _colourScheme.backgroundUp;
 			}
 						
 			repaint();

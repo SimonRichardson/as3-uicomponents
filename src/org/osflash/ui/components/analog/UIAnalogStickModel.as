@@ -17,6 +17,16 @@ package org.osflash.ui.components.analog
 		 * @private
 		 */
 		private var _signalProxy : UIAnalogStickSignalProxy;
+		
+		/**
+		 * @private
+		 */
+		private var _angle : Number;
+		
+		/**
+		 * @private
+		 */
+		private var _distance : Number;
 								
 		public function UIAnalogStickModel()
 		{
@@ -32,6 +42,9 @@ package org.osflash.ui.components.analog
 						
 			_component = UIAnalogStick(component);
 			_signalProxy = UIAnalogStickSignalProxy(_component.signalProxy);
+			
+			_angle = 0;
+			_distance = 0;
 		}
 		
 		/**
@@ -43,6 +56,28 @@ package org.osflash.ui.components.analog
 			_signalProxy = null;
 			
 			super.unbind();
+		}
+		
+		public function get angle() : Number { return _angle; }
+		public function set angle(value : Number) : void
+		{
+			if(_angle != value)
+			{
+				 _angle = value;
+				 
+				 _signalProxy.angle.dispatch(_angle);
+			}
+		}
+		
+		public function get distance() : Number { return _distance; }
+		public function set distance(value : Number) : void
+		{
+			if(_distance != value)
+			{
+				 _distance = value;
+				 
+				 _signalProxy.distance.dispatch(_distance);
+			}
 		}
 	}
 }

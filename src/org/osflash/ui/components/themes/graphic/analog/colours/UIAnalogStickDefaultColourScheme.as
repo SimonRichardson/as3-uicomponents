@@ -39,16 +39,16 @@ package org.osflash.ui.components.themes.graphic.analog.colours
 		/**
 		 * @inheritDoc
 		 */
-		public function get up() : UIGraphicsData { return _up; }
+		public function get backgroundUp() : UIGraphicsData { return _up; }
 
 		/**
 		 * @inheritDoc
 		 */
-		public function get over() : UIGraphicsData { return _over; }
+		public function get backgroundOver() : UIGraphicsData { return _over; }
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function get down() : UIGraphicsData { return _down; }
+		public function get backgroundDown() : UIGraphicsData { return _down; }
 	}
 }

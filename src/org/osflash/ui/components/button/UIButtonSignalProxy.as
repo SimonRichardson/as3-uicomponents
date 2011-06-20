@@ -9,8 +9,8 @@ package org.osflash.ui.components.button
 	public class UIButtonSignalProxy extends UIComponentSignalProxy
 	{
 		
-		private const _textChanged : ISignal = new Signal(String);
+		private const _text : ISignal = new Signal(String);
 		
-		public function get textChanged() : ISignal { return _textChanged; }
+		public function get text() : ISignal { return _text; }
 	}
 }

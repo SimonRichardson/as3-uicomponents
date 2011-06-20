@@ -147,7 +147,7 @@ package org.osflash.ui.components.themes.graphic.analog
 			
 			_colourScheme = _config.colourScheme;
 			
-			_graphicsData = _colourScheme.up;
+			_graphicsData = _colourScheme.backgroundUp;
 			
 			_radius = 0;
 		}
@@ -171,13 +171,13 @@ package org.osflash.ui.components.themes.graphic.analog
 		protected function handleActionSignal(value : int) : void
 		{
 			if((value & UIComponentStateAction.PRESSED) != 0)
-				_graphicsData = _colourScheme.down;
+				_graphicsData = _colourScheme.backgroundDown;
 			else 
 			{
 				if((value & UIComponentStateAction.HOVERED) != 0)
-					_graphicsData = _colourScheme.over;
+					_graphicsData = _colourScheme.backgroundOver;
 				else
-					_graphicsData = _colourScheme.up;
+					_graphicsData = _colourScheme.backgroundUp;
 			}
 						
 			repaint();

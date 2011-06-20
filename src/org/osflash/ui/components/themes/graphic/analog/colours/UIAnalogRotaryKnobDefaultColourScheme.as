@@ -14,41 +14,84 @@ package org.osflash.ui.components.themes.graphic.analog.colours
 		/**
 		 * @private
 		 */
-		private var _up : UIGraphicsData;
+		private var _backgroundUp : UIGraphicsData;
 		
 		/**
 		 * @private
 		 */
-		private var _over : UIGraphicsData;
+		private var _backgroundOver : UIGraphicsData;
 		
 		/**
 		 * @private
 		 */
-		private var _down : UIGraphicsData;
+		private var _backgroundDown : UIGraphicsData;
+		
+		/**
+		 * @private
+		 */
+		private var _knobUp : UIGraphicsData;
+		
+		/**
+		 * @private
+		 */
+		private var _knobOver : UIGraphicsData;
+		
+		/**
+		 * @private
+		 */
+		private var _knobDown : UIGraphicsData;
 
 		public function UIAnalogRotaryKnobDefaultColourScheme()
 		{
 			const fill : GraphicsSolidFill = new GraphicsSolidFill(0x1b1b1b);
 			const strokeStyle : GraphicsStroke = new GraphicsStroke(2);
 			
-			_up = new UIGraphicsData(fill, strokeStyle, new GraphicsSolidFill(0x333333, 1));
-			_over = new UIGraphicsData(fill, strokeStyle, new GraphicsSolidFill(0x000000, 1));
-			_down = new UIGraphicsData(fill, strokeStyle, new GraphicsSolidFill(0x000000, 1));
+			_backgroundUp = new UIGraphicsData(	fill, 
+												strokeStyle, 
+												new GraphicsSolidFill(0x333333, 1)
+												);
+			_backgroundOver = new UIGraphicsData(	fill, 
+													strokeStyle, 
+													new GraphicsSolidFill(0x000000, 1)
+													);
+			_backgroundDown = new UIGraphicsData(	fill, 
+													strokeStyle, 
+													new GraphicsSolidFill(0x000000, 1)
+													);
+			
+			_knobUp = new UIGraphicsData(new GraphicsSolidFill(0xbb00bb));
+			_knobOver = new UIGraphicsData(new GraphicsSolidFill(0xff00ff));
+			_knobDown = new UIGraphicsData(new GraphicsSolidFill(0x00ffff));
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function get up() : UIGraphicsData { return _up; }
+		public function get backgroundUp() : UIGraphicsData { return _backgroundUp; }
 
 		/**
 		 * @inheritDoc
 		 */
-		public function get over() : UIGraphicsData { return _over; }
+		public function get backgroundOver() : UIGraphicsData { return _backgroundOver; }
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function get down() : UIGraphicsData { return _down; }
+		public function get backgroundDown() : UIGraphicsData { return _backgroundDown; }
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get knobUp() : UIGraphicsData { return _knobUp; }
+
+		/**
+		 * @inheritDoc
+		 */
+		public function get knobOver() : UIGraphicsData { return _knobOver; }
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get knobDown() : UIGraphicsData { return _knobDown; }
 	}
 }

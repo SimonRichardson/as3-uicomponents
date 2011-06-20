@@ -17,6 +17,11 @@ package org.osflash.ui.components.analog
 		 * @private
 		 */
 		private var _signalProxy : UIAnalogRotaryKnobSignalProxy;
+		
+		/**
+		 * @private
+		 */
+		private var _position : Number;
 								
 		public function UIAnalogRotaryKnobModel()
 		{
@@ -32,6 +37,8 @@ package org.osflash.ui.components.analog
 						
 			_component = UIAnalogRotaryKnob(component);
 			_signalProxy = UIAnalogRotaryKnobSignalProxy(_component.signalProxy);
+			
+			_position = 0; 
 		}
 		
 		/**
@@ -43,6 +50,17 @@ package org.osflash.ui.components.analog
 			_signalProxy = null;
 			
 			super.unbind();
+		}
+		
+		public function get position() : Number { return _position; }
+		public function set position(value : Number) : void
+		{
+			if(_position != value)
+			{
+				 _position = value;
+				 
+				 _signalProxy.position.dispatch(_position);
+			}
 		}
 	}
 }

@@ -1,8 +1,5 @@
 package org.osflash.ui.components
 {
-	import org.osflash.logger.LogFactory;
-	import org.osflash.logger.logger_namespace;
-	import org.osflash.logger.output.FirebugOutput;
 	import org.osflash.ui.components.analog.UIAnalogStick;
 	import org.osflash.ui.components.themes.graphic.analog.UIGraphicAnalogStickConfig;
 	import org.osflash.ui.components.themes.graphic.analog.UIGraphicAnalogStickView;
@@ -21,11 +18,9 @@ package org.osflash.ui.components
 
 		public function AnalogStickPerformanceTest()
 		{
-			LogFactory.logger_namespace::DEFAULT_LOGGER.stream.add(new FirebugOutput());
-			
 			document = new UIDocument(stage, true);
 			
-			for(var i : int = 0; i<10; i++)
+			for(var i : int = 0; i<1000; i++)
 			{
 				const config : UIGraphicAnalogStickConfig = new UIGraphicAnalogStickConfig();
 				const view : UIGraphicAnalogStickView = new UIGraphicAnalogStickView(config);
@@ -44,6 +39,5 @@ package org.osflash.ui.components
 			
 			document.invalidate();
 		}
-
 	}
 }

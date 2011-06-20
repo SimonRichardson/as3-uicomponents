@@ -4,7 +4,7 @@ package org.osflash.ui.components.analog
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public interface IUIAnalogRotaryKnob extends IUIComponentView
+	public interface IUIAnalogRotaryKnobView extends IUIComponentView
 	{
 	}
 }

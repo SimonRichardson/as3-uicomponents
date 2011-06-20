@@ -13,7 +13,7 @@ package org.osflash.ui.components.analog
 		 */
 		private var _model : UIAnalogRotaryKnobModel;
 		
-		public function UIAnalogRotaryKnob(view : IUIAnalogStickView)
+		public function UIAnalogRotaryKnob(view : IUIAnalogRotaryKnobView)
 		{
 			super(view);
 		}

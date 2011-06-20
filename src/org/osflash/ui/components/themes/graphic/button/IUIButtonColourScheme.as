@@ -7,10 +7,10 @@ package org.osflash.ui.components.themes.graphic.button
 	public interface IUIButtonColourScheme
 	{
 		
-		function get up() : UIGraphicsData;
+		function get backgroundUp() : UIGraphicsData;
 		
-		function get over() : UIGraphicsData;
+		function get backgroundOver() : UIGraphicsData;
 		
-		function get down() : UIGraphicsData;
+		function get backgroundDown() : UIGraphicsData;
 	}
 }

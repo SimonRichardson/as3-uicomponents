@@ -13,8 +13,8 @@ package org.osflash.ui.components.analog
 		 * The position of the rotary knob as an angle
 		 * @private
 		 */
-		private const _positionChanged : ISignal = new Signal(Number);
+		private const _position : ISignal = new Signal(Number);
 		
-		public function get positionChanged() : ISignal { return _positionChanged; }
+		public function get position() : ISignal { return _position; }
 	}
 }

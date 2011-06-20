@@ -58,7 +58,7 @@ package org.osflash.ui.components.button
 			if(_text != value)
 			{
 				_text = value;
-				_signalProxy.textChanged.dispatch(value);
+				_signalProxy.text.dispatch(value);
 			}
 		}
 	}

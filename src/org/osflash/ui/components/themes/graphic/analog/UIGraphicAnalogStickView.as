@@ -1,5 +1,6 @@
 package org.osflash.ui.components.themes.graphic.analog
 {
+	import org.osflash.ui.components.analog.UIAnalogStickModel;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.natives.NativeSignal;
 	import org.osflash.ui.components.analog.IUIAnalogStickView;
@@ -34,6 +35,11 @@ package org.osflash.ui.components.themes.graphic.analog
 		 * @private
 		 */
 		private var _container :  DisplayObjectContainer;
+		
+		/**
+		 * @private
+		 */
+		private var _model : UIAnalogStickModel;
 		
 		/**
 		 * @private
@@ -109,6 +115,8 @@ package org.osflash.ui.components.themes.graphic.analog
 			_container = _component.displayObjectContainer;
 			_container.addChild(_background = new Shape());
 			_component.add(_button = new UIButton(_config.buttonView));
+
+			_model = UIAnalogStickModel(_component.model);
 
 			_signalProxy = UIAnalogStickSignalProxy(_component.signalProxy);
 			_signalProxy.action.add(handleActionSignal);
@@ -203,7 +211,7 @@ package org.osflash.ui.components.themes.graphic.analog
 			
 			_colourScheme = _config.colourScheme;
 			
-			_graphicsData = _colourScheme.up;
+			_graphicsData = _colourScheme.backgroundUp;
 		}
 		
 		/**
@@ -225,13 +233,13 @@ package org.osflash.ui.components.themes.graphic.analog
 		protected function handleActionSignal(value : int) : void
 		{
 			if((value & UIComponentStateAction.PRESSED) != 0)
-				_graphicsData = _colourScheme.down;
+				_graphicsData = _colourScheme.backgroundDown;
 			else 
 			{
 				if((value & UIComponentStateAction.HOVERED) != 0)
-					_graphicsData = _colourScheme.over;
+					_graphicsData = _colourScheme.backgroundOver;
 				else
-					_graphicsData = _colourScheme.up;
+					_graphicsData = _colourScheme.backgroundUp;
 			}
 						
 			repaint();
@@ -287,7 +295,9 @@ package org.osflash.ui.components.themes.graphic.analog
 				_button.x += (_buttonTarget.x - _button.x) * 0.5;
 				_button.y += (_buttonTarget.y - _button.y) * 0.5;
 				
-				_signalProxy.positionChanged.dispatch(distance, angle);
+				// set the model
+				_model.angle = angle;
+				_model.distance = distance;
 			}
 			else
 			{

@@ -7,10 +7,16 @@ package org.osflash.ui.components.themes.graphic.analog
 	public interface IUIAnalogRotaryKnobColourScheme
 	{
 		
-		function get up() : UIGraphicsData;
+		function get backgroundUp() : UIGraphicsData;
 		
-		function get over() : UIGraphicsData;
+		function get backgroundOver() : UIGraphicsData;
 		
-		function get down() : UIGraphicsData;
+		function get backgroundDown() : UIGraphicsData;
+		
+		function get knobUp() : UIGraphicsData;
+		
+		function get knobOver() : UIGraphicsData;
+		
+		function get knobDown() : UIGraphicsData;
 	}
 }

@@ -14,38 +14,38 @@ package org.osflash.ui.components.themes.graphic.analog.colours
 		/**
 		 * @private
 		 */
-		private var _up : UIGraphicsData;
+		private var _backgroundUp : UIGraphicsData;
 		
 		/**
 		 * @private
 		 */
-		private var _over : UIGraphicsData;
+		private var _backgroundOver : UIGraphicsData;
 		
 		/**
 		 * @private
 		 */
-		private var _down : UIGraphicsData;
+		private var _backgroundDown : UIGraphicsData;
 
 		public function UIAnalogStickButtonDefaultColourScheme()
 		{
-			_up = new UIGraphicsData(new GraphicsSolidFill(0xbb00bb, 1));
-			_over = new UIGraphicsData(new GraphicsSolidFill(0xff00ff, 1));
-			_down = new UIGraphicsData(new GraphicsSolidFill(0x00ffff, 1));
+			_backgroundUp = new UIGraphicsData(new GraphicsSolidFill(0xbb00bb, 1));
+			_backgroundOver = new UIGraphicsData(new GraphicsSolidFill(0xff00ff, 1));
+			_backgroundDown = new UIGraphicsData(new GraphicsSolidFill(0x00ffff, 1));
 		}
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function get up() : UIGraphicsData { return _up; }
+		public function get backgroundUp() : UIGraphicsData { return _backgroundUp; }
 
 		/**
 		 * @inheritDoc
 		 */
-		public function get over() : UIGraphicsData { return _over; }
+		public function get backgroundOver() : UIGraphicsData { return _backgroundOver; }
 		
 		/**
 		 * @inheritDoc
 		 */
-		public function get down() : UIGraphicsData { return _down; }
+		public function get backgroundDown() : UIGraphicsData { return _backgroundDown; }
 	}
 }
