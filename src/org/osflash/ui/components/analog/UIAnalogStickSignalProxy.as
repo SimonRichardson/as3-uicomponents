@@ -10,10 +10,10 @@ package org.osflash.ui.components.analog
 	{
 		
 		/**
-		 * The x-pos, y-pos and the distance from the center.
+		 * The distance and angle from the center
 		 * @private
 		 */
-		private const _positionChanged : ISignal = new Signal(Number, Number, Number);
+		private const _positionChanged : ISignal = new Signal(Number, Number);
 		
 		public function get positionChanged() : ISignal { return _positionChanged; }
 	}

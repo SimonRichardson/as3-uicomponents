@@ -121,8 +121,8 @@ package org.osflash.ui.components.themes.graphic.analog
 			
 			_nativeEnterFrameSignal = new NativeSignal(_container, Event.ENTER_FRAME);
 			
-			_button.signals.mouseDownSignal.add(handlebuttonMouseDownSignal);
-			_button.signals.mouseUpSignal.add(handlebuttonMouseUpSignal);
+			_button.signals.mouseDownSignal.add(handleButtonMouseDownSignal);
+			_button.signals.mouseUpSignal.add(handleButtonMouseUpSignal);
 		}
 				
 		/**
@@ -234,11 +234,14 @@ package org.osflash.ui.components.themes.graphic.analog
 		/**
 		 * @private
 		 */
-		private function handlebuttonMouseDownSignal(	target : ISignalTarget, 
+		private function handleButtonMouseDownSignal(	target : ISignalTarget, 
 														mousePos : Point
 														) : void
 		{
 			if(target != _button) return;
+			
+			// On a touch screen this needs to be set...
+			_component.state.hovered = true;
 			
 			_buttonMouseDown = true;
 			
@@ -272,14 +275,16 @@ package org.osflash.ui.components.themes.graphic.analog
 				const r : Number = distance <= radius ? distance : radius;
 				
 				// Work out the rotation (polar)
-				const theta : Number = Math.atan2(dy, dx);
+				const angle : Number = Math.atan2(dy, dx);
 				
 				// Put it back (cartesian)
-				_buttonTarget.x = (Math.cos(theta) * r) + offset;
-				_buttonTarget.y = (Math.sin(theta) * r) + offset;
+				_buttonTarget.x = (Math.cos(angle) * r) + offset;
+				_buttonTarget.y = (Math.sin(angle) * r) + offset;
 				
 				_button.x += (_buttonTarget.x - _button.x) * 0.5;
 				_button.y += (_buttonTarget.y - _button.y) * 0.5;
+				
+				_signalProxy.positionChanged.dispatch(distance, angle);
 			}
 			else
 			{
@@ -305,7 +310,7 @@ package org.osflash.ui.components.themes.graphic.analog
 		/**
 		 * @private
 		 */
-		private function handlebuttonMouseUpSignal(		target : ISignalTarget, 
+		private function handleButtonMouseUpSignal(		target : ISignalTarget, 
 														mousePos : Point
 														) : void
 		{
