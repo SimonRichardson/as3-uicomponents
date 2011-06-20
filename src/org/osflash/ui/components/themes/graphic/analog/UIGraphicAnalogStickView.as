@@ -121,8 +121,10 @@ package org.osflash.ui.components.themes.graphic.analog
 			
 			_nativeEnterFrameSignal = new NativeSignal(_container, Event.ENTER_FRAME);
 			
+			_button.signals.mouseInSignal.add(handleButtonMouseInSignal);
 			_button.signals.mouseDownSignal.add(handleButtonMouseDownSignal);
 			_button.signals.mouseUpSignal.add(handleButtonMouseUpSignal);
+			_button.signals.focusOutSignal.add(handleButtonFocusOutSignal);
 		}
 				
 		/**
@@ -163,8 +165,13 @@ package org.osflash.ui.components.themes.graphic.analog
 		{
 			if(!_container.visible || !_component.enabled) return null;
 			if(_button.captureTarget(point)) return _button;
-			point = _container.globalToLocal(point);
-			return innerBounds.containsPoint(point) ? _component : null;
+			
+			const local : Point = _container.globalToLocal(point);
+			const dx : Number = local.x - _radius;
+			const dy : Number = local.y - _radius;
+			
+			const distance : Number = Math.sqrt((dx * dx) + (dy * dy));
+			return (distance <= _radius) ? _component : null;
 		}
 		
 		/**
@@ -210,7 +217,6 @@ package org.osflash.ui.components.themes.graphic.analog
 			graphics.style(_graphicsData);
 			graphics.drawCircle(innerBounds.x + _radius, innerBounds.y + _radius, _radius);
 			graphics.endFill();
-			
 		}
 		
 		/**
@@ -239,10 +245,7 @@ package org.osflash.ui.components.themes.graphic.analog
 														) : void
 		{
 			if(target != _button) return;
-			
-			// On a touch screen this needs to be set...
-			_component.state.hovered = true;
-			
+						
 			_buttonMouseDown = true;
 			
 			const radius : int = _button.width * 0.5;
@@ -320,6 +323,31 @@ package org.osflash.ui.components.themes.graphic.analog
 			mousePos;
 		}
 		
+		/**
+		 * @private
+		 */
+		private function handleButtonMouseInSignal(		target : ISignalTarget, 
+														mousePos : Point,
+														mouseDown : Boolean
+														) : void
+		{
+			if(!_component.state.hovered) _component.state.hovered = true;
+			
+			target;
+			mousePos;
+			mouseDown;
+		}
+		
+		/**
+		 * @private
+		 */
+		private function handleButtonFocusOutSignal(target : ISignalTarget) : void
+		{
+			if(_component.state.hovered) _component.state.hovered = false;
+			
+			target;
+		}
+				
 		/**
 		 * @private
 		 */	

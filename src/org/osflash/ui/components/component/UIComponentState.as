@@ -9,26 +9,6 @@ package org.osflash.ui.components.component
 		/**
 		 * @private
 		 */
-		private var _enabled : Boolean;
-		
-		/**
-		 * @private
-		 */
-		private var _hovered : Boolean;
-		
-		/**
-		 * @private
-		 */
-		private var _focused : Boolean;
-		
-		/**
-		 * @private
-		 */
-		private var _pressed :  Boolean;
-		
-		/**
-		 * @private
-		 */
 		private var _action : int;
 		
 		/**
@@ -42,12 +22,7 @@ package org.osflash.ui.components.component
 		private var _signalProxy : IUIComponentSignalProxy;
 		
 		public function UIComponentState()
-		{
-			_enabled = true;
-			_hovered = false;
-			_focused = false;
-			_pressed = false;
-			
+		{			
 			_action = UIComponentStateAction.ENABLED;
 		}
 		
@@ -77,16 +52,19 @@ package org.osflash.ui.components.component
 		/**
 		 * @inheritDoc
 		 */
-		public function get enabled() : Boolean { return _enabled; }
+		public function get enabled() : Boolean 
+		{
+			 return (action & UIComponentStateAction.ENABLED) != 0; 
+		}
 		public function set enabled(value : Boolean) : void
 		{
-			if (_enabled != value)
+			if (enabled != value)
 			{
-				_enabled = value;
-				if(_enabled == value)
+				if(value)
 					action |= UIComponentStateAction.ENABLED;
 				else 
 					action ^= UIComponentStateAction.ENABLED;
+				
 				_signalProxy.enabled.dispatch(value);
 			}
 		}
@@ -94,16 +72,19 @@ package org.osflash.ui.components.component
 		/**
 		 * @inheritDoc
 		 */
-		public function get hovered() : Boolean { return _hovered; }
+		public function get hovered() : Boolean
+		{
+			 return (action & UIComponentStateAction.HOVERED) != 0; 
+		}
 		public function set hovered(value : Boolean) : void
 		{
-			if (_hovered != value)
+			if (hovered != value)
 			{
-				_hovered = value;
-				if(_hovered == value)
+				if(value)
 					action |= UIComponentStateAction.HOVERED;
 				else 
 					action ^= UIComponentStateAction.HOVERED;
+				
 				_signalProxy.hovered.dispatch(value);
 			}
 		}
@@ -111,16 +92,19 @@ package org.osflash.ui.components.component
 		/**
 		 * @inheritDoc
 		 */
-		public function get focused() : Boolean { return _focused; }
+		public function get focused() : Boolean
+		{
+			 return (action & UIComponentStateAction.FOCUSED) != 0; 
+		}
 		public function set focused(value : Boolean) : void
 		{
-			if (_focused != value)
+			if (focused != value)
 			{
-				_focused = value;
-				if(_focused == value)
+				if(value)
 					action |= UIComponentStateAction.FOCUSED;
 				else 
 					action ^= UIComponentStateAction.FOCUSED;
+				
 				_signalProxy.focused.dispatch(value);
 			}
 		}
@@ -128,16 +112,19 @@ package org.osflash.ui.components.component
 		/**
 		 * @inheritDoc
 		 */
-		public function get pressed() : Boolean { return _pressed; }
+		public function get pressed() : Boolean
+		{
+			 return (action & UIComponentStateAction.PRESSED) != 0; 
+		}
 		public function set pressed(value : Boolean) : void
 		{
-			if(_pressed != value)
+			if(pressed != value)
 			{
-				_pressed = value;
-				if(_focused == value)
+				if(value)
 					action |= UIComponentStateAction.PRESSED;
 				else 
 					action ^= UIComponentStateAction.PRESSED;
+				
 				_signalProxy.pressed.dispatch(value);
 			}
 		}
