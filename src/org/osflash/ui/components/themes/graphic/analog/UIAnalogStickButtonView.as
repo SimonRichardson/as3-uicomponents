@@ -18,8 +18,7 @@ package org.osflash.ui.components.themes.graphic.analog
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIGraphicAnalogStickButtonView extends UIGraphicComponentView 
-																	implements IUIButtonView
+	public class UIAnalogStickButtonView extends UIGraphicComponentView implements IUIButtonView
 	{
 		
 		/**
@@ -62,7 +61,7 @@ package org.osflash.ui.components.themes.graphic.analog
 		 */
 		private var _radius : int;
 				
-		public function UIGraphicAnalogStickButtonView(config : IUIButtonViewConfig)
+		public function UIAnalogStickButtonView(config : IUIButtonViewConfig)
 		{
 			super();
 			

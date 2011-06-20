@@ -20,7 +20,7 @@ package org.osflash.ui.components.themes.graphic.analog
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIGraphicAnalogRotaryKnobView extends UIGraphicComponentView 
+	public class UIAnalogRotaryKnobView extends UIGraphicComponentView 
 															implements IUIAnalogRotaryKnobView
 	{
 		
@@ -118,7 +118,7 @@ package org.osflash.ui.components.themes.graphic.analog
 		 */
 		private var _nativeEnterFrameSignal : ISignal;
 						
-		public function UIGraphicAnalogRotaryKnobView(config : IUIAnalogRotaryKnobViewConfig)
+		public function UIAnalogRotaryKnobView(config : IUIAnalogRotaryKnobViewConfig)
 		{
 			super();
 			
@@ -263,6 +263,8 @@ package org.osflash.ui.components.themes.graphic.analog
          */
         protected function updateKnob() : void
         {
+        	if(_mouseDown) return;
+        	
         	if(_animating) _positionStoredValue = true;
 			else repaintKnob();	
         }
@@ -365,16 +367,16 @@ package org.osflash.ui.components.themes.graphic.analog
 	        
 			const angle: Number = ANGLE_MIN + _positionTarget * ANGLE_MAX;
 			
-			const cs: Number = Math.cos( angle );
-			const sn: Number = Math.sin( angle );
+			const cos1: Number = Math.cos( angle );
+			const sin1: Number = Math.sin( angle );
 			
-			const r1: Number = _radius - (_radius * 0.25);
+			const radius: Number = _radius - (_radius * 0.25);
 			
 			graphics.context(_knob.graphics);
 			
 			graphics.clear();
 			graphics.style(_knobGraphicsData);
-			graphics.drawCircle((cs * r1) + _radius, (sn * r1) + _radius, _radius * 0.1);
+			graphics.drawCircle((cos1 * radius) + _radius, (sin1 * radius) + _radius, _radius * 0.1);
 			graphics.endFill();
 			
 			_model.position = _position;

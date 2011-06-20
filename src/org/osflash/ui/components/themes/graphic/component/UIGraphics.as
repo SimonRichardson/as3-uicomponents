@@ -147,6 +147,43 @@ package org.osflash.ui.components.themes.graphic.component
 									);
 		}
 		
+		public function drawRoundRectangle(value : Rectangle, radius : Number) : void
+		{
+			if(null == value) throw new ArgumentError('Rectangle can not be null');
+//			
+//			moveTo(image_mc._width - cornerDiameter, 0);
+//			curveTo(image_mc._width, 0, image_mc._width, cornerDiameter);
+//			lineTo(image_mc._width, image_mc._height - cornerDiameter);
+//			curveTo(image_mc._width, image_mc._height, image_mc._width - cornerDiameter, image_mc._height);
+//			lineTo(cornerDiameter, image_mc._height);
+//			curveTo(0, image_mc._height, 0, image_mc._height - cornerDiameter);
+//			lineTo(0, cornerDiameter);
+//			curveTo(0, 0, cornerDiameter, 0);
+//			lineTo(image_mc._width - cornerDiameter, 0)
+			
+			_graphicPath.commands.push(	_moveToCommand,
+										_curveToCommand,
+										_lineToCommand,
+										_curveToCommand,
+										_lineToCommand,
+										_curveToCommand,
+										_lineToCommand,
+										_curveToCommand,
+										_lineToCommand
+										);
+			
+			_graphicPath.data.push ( value.width - radius, 0,
+									 value.width, 0, value.width, radius,
+									 value.width, value.height - radius,
+									 value.width, value.height, value.width - radius, value.height,
+									 radius, value.height,
+									 0, value.height, 0, value.height - radius,
+									 0, radius,
+									 0, 0, radius, 0,
+									 value.width - radius, 0
+									 );
+		}
+		
 		public function drawCircle(x : Number, y : Number, radius : Number) : void
 		{
 			_graphicPath.commands.push(	_moveToCommand, 
@@ -174,7 +211,7 @@ package org.osflash.ui.components.themes.graphic.component
 									x - radius, y + u, x - radius, y
 									);			
 		}
-		
+				
 		public function endFill() : void
 		{
 			if(null == _graphics) throw new IllegalOperationError('Graphics context is null');

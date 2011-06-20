@@ -1,8 +1,8 @@
 package org.osflash.ui.components
 {
 	import org.osflash.ui.components.analog.UIAnalogRotaryKnob;
-	import org.osflash.ui.components.themes.graphic.analog.UIGraphicAnalogRotaryKnobConfig;
-	import org.osflash.ui.components.themes.graphic.analog.UIGraphicAnalogRotaryKnobView;
+	import org.osflash.ui.components.themes.graphic.analog.UIAnalogRotaryKnobConfig;
+	import org.osflash.ui.components.themes.graphic.analog.UIAnalogRotaryKnobView;
 	import org.osflash.ui.display.UIDocument;
 
 	import flash.display.Sprite;
@@ -21,10 +21,10 @@ package org.osflash.ui.components
 			
 			for(var i : int = 0; i<200; i++)
 			{
-				const config : UIGraphicAnalogRotaryKnobConfig = 
-															new UIGraphicAnalogRotaryKnobConfig();
-				const view : UIGraphicAnalogRotaryKnobView = 
-														new UIGraphicAnalogRotaryKnobView(config);
+				const config : UIAnalogRotaryKnobConfig = 
+															new UIAnalogRotaryKnobConfig();
+				const view : UIAnalogRotaryKnobView = 
+														new UIAnalogRotaryKnobView(config);
 				const analogRotaryKnob : UIAnalogRotaryKnob = new UIAnalogRotaryKnob(view);
 				
 				const size : int = (Math.random() * 300) + 50;

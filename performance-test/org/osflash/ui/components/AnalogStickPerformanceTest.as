@@ -1,8 +1,8 @@
 package org.osflash.ui.components
 {
 	import org.osflash.ui.components.analog.UIAnalogStick;
-	import org.osflash.ui.components.themes.graphic.analog.UIGraphicAnalogStickConfig;
-	import org.osflash.ui.components.themes.graphic.analog.UIGraphicAnalogStickView;
+	import org.osflash.ui.components.themes.graphic.analog.UIAnalogStickConfig;
+	import org.osflash.ui.components.themes.graphic.analog.UIAnalogStickView;
 	import org.osflash.ui.display.UIDocument;
 
 	import flash.display.Sprite;
@@ -23,8 +23,8 @@ package org.osflash.ui.components
 			for(var i : int = 0; i<1000; i++)
 			{
 				
-				const config : UIGraphicAnalogStickConfig = new UIGraphicAnalogStickConfig();
-				const view : UIGraphicAnalogStickView = new UIGraphicAnalogStickView(config);
+				const config : UIAnalogStickConfig = new UIAnalogStickConfig();
+				const view : UIAnalogStickView = new UIAnalogStickView(config);
 				const analogStick : UIAnalogStick = new UIAnalogStick(view);
 				
 				const size : int = (Math.random() * 300) + 50;

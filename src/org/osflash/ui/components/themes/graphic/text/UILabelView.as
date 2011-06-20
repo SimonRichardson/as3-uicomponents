@@ -5,7 +5,7 @@ package org.osflash.ui.components.themes.graphic.text
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIGraphicLabelView extends UIGraphicComponentView implements IUILabelView
+	public class UILabelView extends UIGraphicComponentView implements IUILabelView
 	{
 		
 	}

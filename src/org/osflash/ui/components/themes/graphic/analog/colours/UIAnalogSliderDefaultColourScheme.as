@@ -1,14 +1,14 @@
 package org.osflash.ui.components.themes.graphic.analog.colours
 {
-	import flash.display.GraphicsStroke;
-	import org.osflash.ui.components.themes.graphic.analog.IUIAnalogStickColourScheme;
+	import org.osflash.ui.components.themes.graphic.analog.IUIAnalogSliderColourScheme;
 	import org.osflash.ui.components.themes.graphic.component.UIGraphicsData;
 
 	import flash.display.GraphicsSolidFill;
+	import flash.display.GraphicsStroke;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIAnalogStickDefaultColourScheme implements IUIAnalogStickColourScheme
+	public class UIAnalogSliderDefaultColourScheme implements IUIAnalogSliderColourScheme
 	{
 		
 		/**
@@ -26,7 +26,7 @@ package org.osflash.ui.components.themes.graphic.analog.colours
 		 */
 		private var _backgroundDown : UIGraphicsData;
 
-		public function UIAnalogStickDefaultColourScheme()
+		public function UIAnalogSliderDefaultColourScheme()
 		{
 			const fill : GraphicsSolidFill = new GraphicsSolidFill(0x1b1b1b);
 			const strokeStyle : GraphicsStroke = new GraphicsStroke(2);

@@ -1,8 +1,8 @@
 package org.osflash.ui.components
 {
 	import org.osflash.ui.components.button.UIButton;
-	import org.osflash.ui.components.themes.graphic.button.UIGraphicButtonConfig;
-	import org.osflash.ui.components.themes.graphic.button.UIGraphicButtonView;
+	import org.osflash.ui.components.themes.graphic.button.UIButtonConfig;
+	import org.osflash.ui.components.themes.graphic.button.UIButtonView;
 	import org.osflash.ui.display.UIDocument;
 
 	import flash.display.Sprite;
@@ -20,11 +20,11 @@ package org.osflash.ui.components
 		{
 			document = new UIDocument(stage, true);
 			
-			const config : UIGraphicButtonConfig = new UIGraphicButtonConfig();
+			const config : UIButtonConfig = new UIButtonConfig();
 			
 			for(var i : int = 0; i<4000; i++)
 			{
-				const view : UIGraphicButtonView = new UIGraphicButtonView(config);
+				const view : UIButtonView = new UIButtonView(config);
 				const button : UIButton = new UIButton(view);
 				
 				button.width = 100;

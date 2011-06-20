@@ -19,10 +19,10 @@ package org.osflash.ui.components.analog
 		 * The distance from the center
 		 * @private
 		 */
-		private const _distance : ISignal = new Signal(Number);
+		private const _radius : ISignal = new Signal(Number);
 		
 		public function get angle() : ISignal { return _angle; }
 		
-		public function get distance() : ISignal { return _distance; }
+		public function get radius() : ISignal { return _radius; }
 	}
 }

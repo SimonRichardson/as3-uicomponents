@@ -1,16 +1,15 @@
 package org.osflash.ui.components.themes.graphic.analog.colours
 {
-	import flash.display.GraphicsStroke;
-	import org.osflash.ui.components.themes.graphic.analog.IUIAnalogStickColourScheme;
+	import org.osflash.ui.components.themes.graphic.button.IUIButtonColourScheme;
 	import org.osflash.ui.components.themes.graphic.component.UIGraphicsData;
 
 	import flash.display.GraphicsSolidFill;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIAnalogStickDefaultColourScheme implements IUIAnalogStickColourScheme
+	public class UIAnalogSliderButtonDefaultColourScheme implements IUIButtonColourScheme
 	{
-		
+
 		/**
 		 * @private
 		 */
@@ -26,23 +25,11 @@ package org.osflash.ui.components.themes.graphic.analog.colours
 		 */
 		private var _backgroundDown : UIGraphicsData;
 
-		public function UIAnalogStickDefaultColourScheme()
+		public function UIAnalogSliderButtonDefaultColourScheme()
 		{
-			const fill : GraphicsSolidFill = new GraphicsSolidFill(0x1b1b1b);
-			const strokeStyle : GraphicsStroke = new GraphicsStroke(2);
-			
-			_backgroundUp = new UIGraphicsData(	fill, 
-												strokeStyle, 
-												new GraphicsSolidFill(0x333333, 1)
-												);
-			_backgroundOver = new UIGraphicsData(	fill, 
-													strokeStyle, 
-													new GraphicsSolidFill(0x000000, 1)
-													);
-			_backgroundDown = new UIGraphicsData(	fill, 
-													strokeStyle, 
-													new GraphicsSolidFill(0x000000, 1)
-													);
+			_backgroundUp = new UIGraphicsData(new GraphicsSolidFill(0xbb00bb, 1));
+			_backgroundOver = new UIGraphicsData(new GraphicsSolidFill(0xff00ff, 1));
+			_backgroundDown = new UIGraphicsData(new GraphicsSolidFill(0x00ffff, 1));
 		}
 		
 		/**

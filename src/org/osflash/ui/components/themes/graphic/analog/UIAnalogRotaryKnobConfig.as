@@ -5,7 +5,7 @@ package org.osflash.ui.components.themes.graphic.analog
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIGraphicAnalogRotaryKnobConfig extends UIGraphicComponentConfig 
+	public class UIAnalogRotaryKnobConfig extends UIGraphicComponentConfig 
 													implements IUIAnalogRotaryKnobViewConfig
 	{
 		
@@ -14,7 +14,7 @@ package org.osflash.ui.components.themes.graphic.analog
 		 */
 		private var _colourScheme : IUIAnalogRotaryKnobColourScheme;
 		
-		public function UIGraphicAnalogRotaryKnobConfig(
+		public function UIAnalogRotaryKnobConfig(
 											colourScheme : IUIAnalogRotaryKnobColourScheme = null
 											)
 		{

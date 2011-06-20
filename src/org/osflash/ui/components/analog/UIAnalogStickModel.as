@@ -63,9 +63,12 @@ package org.osflash.ui.components.analog
 		{
 			if(_angle != value)
 			{
-				 _angle = value;
+				
+				if(value < 0) value = 0;
+				else if(value > 1) value = 1;
+				_angle = value;
 				 
-				 _signalProxy.angle.dispatch(_angle);
+				_signalProxy.angle.dispatch(_angle);
 			}
 		}
 		
@@ -74,9 +77,12 @@ package org.osflash.ui.components.analog
 		{
 			if(_radius != value)
 			{
-				 _radius = value;
+				if(value < 0) value = 0;
+				else if(value > 1) value = 1;
+				
+				_radius = value;
 				 
-				 _signalProxy.distance.dispatch(_radius);
+				_signalProxy.radius.dispatch(_radius);
 			}
 		}
 	}

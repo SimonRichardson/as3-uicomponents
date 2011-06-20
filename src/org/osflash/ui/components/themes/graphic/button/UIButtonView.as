@@ -18,7 +18,7 @@ package org.osflash.ui.components.themes.graphic.button
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIGraphicButtonView extends UIGraphicComponentView implements IUIButtonView
+	public class UIButtonView extends UIGraphicComponentView implements IUIButtonView
 	{
 		
 		/**
@@ -56,7 +56,7 @@ package org.osflash.ui.components.themes.graphic.button
 		 */
 		private var _graphicsData : UIGraphicsData;
 				
-		public function UIGraphicButtonView(config : IUIButtonViewConfig)
+		public function UIButtonView(config : IUIButtonViewConfig)
 		{
 			super();
 			

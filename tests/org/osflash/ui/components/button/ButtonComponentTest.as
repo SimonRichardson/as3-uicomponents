@@ -1,8 +1,8 @@
 package org.osflash.ui.components.button
 {
 	import org.osflash.dom.element.IDOMDocument;
-	import org.osflash.ui.components.themes.graphic.button.UIGraphicButtonConfig;
-	import org.osflash.ui.components.themes.graphic.button.UIGraphicButtonView;
+	import org.osflash.ui.components.themes.graphic.button.UIButtonConfig;
+	import org.osflash.ui.components.themes.graphic.button.UIButtonView;
 	import org.osflash.ui.display.UIDocument;
 
 	import flash.display.Stage;
@@ -33,8 +33,8 @@ package org.osflash.ui.components.button
 		[Test]
 		public function add_button_to_document() : void
 		{
-			const config : UIGraphicButtonConfig = new UIGraphicButtonConfig();
-			const view : UIGraphicButtonView = new UIGraphicButtonView(config);
+			const config : UIButtonConfig = new UIButtonConfig();
+			const view : UIButtonView = new UIButtonView(config);
 			const button : UIButton = new UIButton(view);
 			
 			button.x = 100;

@@ -13,7 +13,7 @@ package org.osflash.ui.components.analog
 		 */
 		private var _model : UIAnalogSliderModel;
 		
-		public function UIAnalogSlider(view : IUIAnalogRotaryKnobView)
+		public function UIAnalogSlider(view : IUIAnalogSliderView)
 		{
 			super(view);
 		}

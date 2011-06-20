@@ -7,7 +7,7 @@ package org.osflash.ui.components.themes.graphic.analog
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIGraphicAnalogStickButtonConfig extends UIGraphicComponentConfig 
+	public class UIAnalogStickButtonConfig extends UIGraphicComponentConfig 
 													implements IUIButtonViewConfig
 	{
 		
@@ -16,7 +16,7 @@ package org.osflash.ui.components.themes.graphic.analog
 		 */
 		private var _colourScheme : IUIButtonColourScheme;
 		
-		public function UIGraphicAnalogStickButtonConfig(colourScheme : IUIButtonColourScheme = null)
+		public function UIAnalogStickButtonConfig(colourScheme : IUIButtonColourScheme = null)
 		{
 			_colourScheme = colourScheme || new UIAnalogStickButtonDefaultColourScheme();
 		}

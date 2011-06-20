@@ -1,7 +1,7 @@
 package org.osflash.ui.components.themes.graphic.component
 {
-	import org.osflash.ui.components.component.UIComponentStateAction;
 	import org.osflash.ui.components.component.IUIComponent;
+	import org.osflash.ui.components.component.UIComponentStateAction;
 	import org.osflash.ui.components.component.UIComponentView;
 	import org.osflash.ui.signals.ISignalTarget;
 
@@ -16,8 +16,7 @@ package org.osflash.ui.components.themes.graphic.component
 		/**
 		 * @private
 		 */
-		private static const _graphics : UIGraphics = 
-																new UIGraphics();
+		private static const _graphics : UIGraphics = new UIGraphics();
 
 		/**
 		 * @private

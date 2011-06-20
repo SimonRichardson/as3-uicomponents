@@ -5,7 +5,7 @@ package org.osflash.ui.components.themes.graphic.button
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIGraphicButtonConfig extends UIGraphicComponentConfig 
+	public class UIButtonConfig extends UIGraphicComponentConfig 
 												implements IUIButtonViewConfig
 	{
 		
@@ -14,7 +14,7 @@ package org.osflash.ui.components.themes.graphic.button
 		 */
 		private var _colourScheme : IUIButtonColourScheme;
 		
-		public function UIGraphicButtonConfig(colourScheme : IUIButtonColourScheme = null)
+		public function UIButtonConfig(colourScheme : IUIButtonColourScheme = null)
 		{
 			_colourScheme = colourScheme || new UIButtonDefaultColourScheme();
 		}

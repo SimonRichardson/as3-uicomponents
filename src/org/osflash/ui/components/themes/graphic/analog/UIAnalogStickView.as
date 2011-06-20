@@ -1,5 +1,6 @@
 package org.osflash.ui.components.themes.graphic.analog
 {
+	import flash.display.DisplayObject;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.natives.NativeSignal;
 	import org.osflash.ui.components.analog.IUIAnalogStickView;
@@ -22,8 +23,7 @@ package org.osflash.ui.components.themes.graphic.analog
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIGraphicAnalogStickView extends UIGraphicComponentView 
-															implements IUIAnalogStickView
+	public class UIAnalogStickView extends UIGraphicComponentView implements IUIAnalogStickView
 	{
 		
 		public static const MATH_PI_TWO : Number = Math.PI * 2;
@@ -96,9 +96,19 @@ package org.osflash.ui.components.themes.graphic.analog
 		/**
 		 * @private
 		 */
+		private var _animating : Boolean;
+		
+		/**
+		 * @private
+		 */
+		private var _positionStoredValue : Boolean;
+		
+		/**
+		 * @private
+		 */
 		private var _nativeEnterFrameSignal : ISignal;
 				
-		public function UIGraphicAnalogStickView(config : IUIAnalogStickViewConfig)
+		public function UIAnalogStickView(config : IUIAnalogStickViewConfig)
 		{
 			super();
 			
@@ -122,8 +132,13 @@ package org.osflash.ui.components.themes.graphic.analog
 
 			_signalProxy = UIAnalogStickSignalProxy(_component.signalProxy);
 			_signalProxy.action.add(handleActionSignal);
+			_signalProxy.angle.add(handleAngleSignal);
+			_signalProxy.radius.add(handleRadiusSignal);
 			
 			initConfig(_config);
+			
+			_animating = false;
+			_positionStoredValue = false;
 			
 			_buttonTarget = new Point();
 			_buttonMouseDown = false;
@@ -154,6 +169,11 @@ package org.osflash.ui.components.themes.graphic.analog
 			
 			if(null != _button)
 			{
+				_button.signals.mouseInSignal.remove(handleButtonMouseInSignal);
+				_button.signals.mouseDownSignal.remove(handleButtonMouseDownSignal);
+				_button.signals.mouseUpSignal.remove(handleButtonMouseUpSignal);
+				_button.signals.focusOutSignal.remove(handleButtonFocusOutSignal);
+				
 				if(_component.contains(_button))
 					_component.remove(_button);
 				_button = null;
@@ -162,6 +182,8 @@ package org.osflash.ui.components.themes.graphic.analog
 			if(null != _signalProxy)
 			{
 				_signalProxy.action.remove(handleActionSignal);
+				_signalProxy.angle.remove(handleAngleSignal);
+				_signalProxy.radius.remove(handleRadiusSignal);
 				_signalProxy = null;
 			}
 			
@@ -232,6 +254,34 @@ package org.osflash.ui.components.themes.graphic.analog
 		/**
 		 * @private
 		 */
+		protected function updateButton() : void
+		{
+			if(_buttonMouseDown) return;
+			
+			if(_animating) _positionStoredValue = true;
+			else
+			{
+				const radius : int = _button.width * 0.5;
+				const offset : Number = _radius - radius;
+				
+				// Limit the distance			
+				const r : Number = _model.radius * radius;
+				
+				const angle : Number = (_model.angle * MATH_PI_TWO) - Math.PI;
+					
+				// Put it back (cartesian)
+				_button.x = (Math.cos(angle) * r) + offset;
+				_button.y = (Math.sin(angle) * r) + offset;
+				
+				// TODO: Use Easing equation to move it back to the center.
+				
+				_positionStoredValue = false;
+			}
+		}
+		
+		/**
+		 * @private
+		 */
 		protected function handleActionSignal(value : int) : void
 		{
 			if((value & UIComponentStateAction.PRESSED) != 0)
@@ -245,6 +295,26 @@ package org.osflash.ui.components.themes.graphic.analog
 			}
 						
 			repaint();
+		}
+				
+		/**
+		 * @private
+		 */
+		protected function handleAngleSignal(value : Number) : void
+		{
+			updateButton();
+			
+			value;
+		}
+		
+		/**
+		 * @private
+		 */
+		protected function handleRadiusSignal(value : Number) : void
+		{
+			updateButton();
+			
+			value;
 		}
 		
 		/**
@@ -276,6 +346,10 @@ package org.osflash.ui.components.themes.graphic.analog
 			const radius : int = _button.width * 0.5;
 			const offset : Number = _radius - radius;
 			
+			_animating = true;
+			
+			const displayObject : DisplayObject = _button.displayObject;
+			
 			if(_buttonMouseDown)
 			{
 				// Work out the distance
@@ -294,8 +368,8 @@ package org.osflash.ui.components.themes.graphic.analog
 				_buttonTarget.x = (Math.cos(angle) * r) + offset;
 				_buttonTarget.y = (Math.sin(angle) * r) + offset;
 				
-				_button.x += (_buttonTarget.x - _button.x) * 0.5;
-				_button.y += (_buttonTarget.y - _button.y) * 0.5;
+				displayObject.x += (_buttonTarget.x - displayObject.x) * 0.5;
+				displayObject.y += (_buttonTarget.y - displayObject.y) * 0.5;
 				
 				// set the model
 				_model.angle = (angle + Math.PI) / MATH_PI_TWO;
@@ -303,21 +377,24 @@ package org.osflash.ui.components.themes.graphic.analog
 			}
 			else
 			{
-				// TODO : Swap this for an easing equation.
-				_button.displayObject.x += (offset - _button.displayObject.x) * 0.5;
-				_button.displayObject.y += (offset - _button.displayObject.y) * 0.5;
+				// TODO : Turn this into an transition
+				displayObject.x += (offset - displayObject.x) * 0.5;
+				displayObject.y += (offset - displayObject.y) * 0.5;
 				
-				const x : Number = (_button.displayObject.x - offset);
-				const y : Number = (_button.displayObject.y - offset);
+				const x : Number = (displayObject.x - offset);
+				const y : Number = (displayObject.y - offset);
 				const absx : Number = x < 0 ? -x : x;
 				const absy : Number = y < 0 ? -x : y;
 				
 				if(absx <= 0.2 && absy <= 0.2)
 				{
-					_button.displayObject.x = offset;
-					_button.displayObject.y = offset;
+					displayObject.x = offset;
+					displayObject.y = offset;
 					
+					_animating = false;
 					_nativeEnterFrameSignal.remove(handleEnterFrameSignal);
+					
+					if(_positionStoredValue) updateButton();					
 				}
 			}
 		}
@@ -358,18 +435,6 @@ package org.osflash.ui.components.themes.graphic.analog
 			if(_component.state.hovered) _component.state.hovered = false;
 			
 			target;
-		}
-				
-		/**
-		 * @private
-		 */	
-		override protected function handleMouseUpSignal(	target : ISignalTarget, 
-															mousePos : Point
-															) : void
-		{
-			super.handleMouseUpSignal(target, mousePos);
-			
-			_buttonMouseDown = false;
 		}
 	}
 }
