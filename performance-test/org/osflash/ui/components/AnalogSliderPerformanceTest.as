@@ -19,7 +19,7 @@ package org.osflash.ui.components
 		{
 			document = new UIDocument(stage, true);
 			
-			for(var i : int = 0; i<1; i++)
+			for(var i : int = 0; i<1000; i++)
 			{
 				
 				const config : UIAnalogSliderConfig = new UIAnalogSliderConfig();
@@ -29,7 +29,7 @@ package org.osflash.ui.components
 				const size : int = (Math.random() * 150) + 150;
 				
 				analogSlider.width = size;
-				analogSlider.height = 10;
+				analogSlider.height = (Math.random() * 10) + 10;
 				
 				analogSlider.x = (Math.random() * (800 - analogSlider.width));
 				analogSlider.y = (Math.random() * (800 - analogSlider.height));

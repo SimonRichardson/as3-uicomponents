@@ -121,7 +121,7 @@ package org.osflash.ui.components.themes.graphic.analog
 			_container = _component.displayObjectContainer;
 			_container.addChild(_background = new Shape());
 			_component.add(_button = new UIButton(_config.buttonView));
-
+			
 			_model = UIAnalogSliderModel(_component.model);
 
 			_signalProxy = UIAnalogSliderSignalProxy(_component.signalProxy);
@@ -139,6 +139,8 @@ package org.osflash.ui.components.themes.graphic.analog
 			
 			_nativeEnterFrameSignal = new NativeSignal(_container, Event.ENTER_FRAME);
 			
+			_component.signals.mouseDownSignal.add(handleMouseDownSignal);
+			
 			_button.signals.mouseInSignal.add(handleButtonMouseInSignal);
 			_button.signals.mouseDownSignal.add(handleButtonMouseDownSignal);
 			_button.signals.mouseUpSignal.add(handleButtonMouseUpSignal);
@@ -150,7 +152,12 @@ package org.osflash.ui.components.themes.graphic.analog
 		 */	
 		override public function unbind() : void
 		{
-			_component = null;
+			if(null != _component)
+			{
+				_component.signals.mouseDownSignal.remove(handleMouseDownSignal);
+				_component = null;
+			}
+			
 			_container = null;
 			
 			if(null != _background)
@@ -162,6 +169,11 @@ package org.osflash.ui.components.themes.graphic.analog
 			
 			if(null != _button)
 			{
+				_button.signals.mouseInSignal.remove(handleButtonMouseInSignal);
+				_button.signals.mouseDownSignal.remove(handleButtonMouseDownSignal);
+				_button.signals.mouseUpSignal.remove(handleButtonMouseUpSignal);
+				_button.signals.focusOutSignal.remove(handleButtonFocusOutSignal);
+				
 				if(_component.contains(_button))
 					_component.remove(_button);
 				_button = null;
@@ -225,7 +237,7 @@ package org.osflash.ui.components.themes.graphic.analog
 			
 			graphics.clear();
 			graphics.style(_graphicsData);
-			graphics.drawRoundRectangle(innerBounds, 5);
+			graphics.drawRoundRectangle(innerBounds, innerBounds.height * 0.5);
 			graphics.endFill();
 		}
 		
@@ -289,7 +301,23 @@ package org.osflash.ui.components.themes.graphic.analog
 			_buttonMouseDown = true;
 			_buttonMouseDownPos = _button.displayObject.globalToLocal(mousePos);
 						
-			_nativeEnterFrameSignal.add(handleEnterFrameSignal);
+			if(!_animating) _nativeEnterFrameSignal.add(handleEnterFrameSignal);
+		}
+		
+		/**
+		 * @private
+		 */
+		override protected function handleMouseDownSignal(	target : ISignalTarget, 
+															mousePos : Point
+															) : void
+		{
+			super.handleMouseDownSignal(target, mousePos);
+			
+			if(target != _component) return;
+			
+			_buttonMouseDown = true;
+			
+			if(!_animating) _nativeEnterFrameSignal.add(handleEnterFrameSignal);
 		}
 		
 		/**
@@ -374,6 +402,18 @@ package org.osflash.ui.components.themes.graphic.analog
 			if(_component.state.hovered) _component.state.hovered = false;
 			
 			target;
+		}
+		
+		/**
+		 * @private
+		 */
+		override protected function handleMouseUpSignal(	target : ISignalTarget, 
+															mousePos : Point
+															) : void
+		{
+			super.handleMouseUpSignal(target, mousePos);
+			
+			_buttonMouseDown = false;
 		}
 	}
 }
