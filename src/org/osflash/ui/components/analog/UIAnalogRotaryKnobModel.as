@@ -57,9 +57,12 @@ package org.osflash.ui.components.analog
 		{
 			if(_position != value)
 			{
-				 _position = value;
+				if(value < 0) value = 0;
+				else if(value > 1) value = 1;
+				
+				_position = value;
 				 
-				 _signalProxy.position.dispatch(_position);
+				_signalProxy.position.dispatch(_position);
 			}
 		}
 	}

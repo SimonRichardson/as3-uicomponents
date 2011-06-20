@@ -248,7 +248,7 @@ package org.osflash.ui.components.themes.graphic.analog
 		/**
 		 * @private
 		 */
-		private function handleButtonMouseDownSignal(	target : ISignalTarget, 
+		protected function handleButtonMouseDownSignal(	target : ISignalTarget, 
 														mousePos : Point
 														) : void
 		{
@@ -269,7 +269,7 @@ package org.osflash.ui.components.themes.graphic.analog
 		/**
 		 * @private
 		 */
-		private function handleEnterFrameSignal(event : Event) : void
+		protected function handleEnterFrameSignal(event : Event) : void
 		{
 			const radius : int = _button.width * 0.5;
 			const offset : Number = _radius - radius;
@@ -323,9 +323,9 @@ package org.osflash.ui.components.themes.graphic.analog
 		/**
 		 * @private
 		 */
-		private function handleButtonMouseUpSignal(		target : ISignalTarget, 
-														mousePos : Point
-														) : void
+		protected function handleButtonMouseUpSignal(		target : ISignalTarget, 
+															mousePos : Point
+															) : void
 		{
 			_buttonMouseDown = false;
 			
@@ -336,10 +336,10 @@ package org.osflash.ui.components.themes.graphic.analog
 		/**
 		 * @private
 		 */
-		private function handleButtonMouseInSignal(		target : ISignalTarget, 
-														mousePos : Point,
-														mouseDown : Boolean
-														) : void
+		protected function handleButtonMouseInSignal(		target : ISignalTarget, 
+															mousePos : Point,
+															mouseDown : Boolean
+															) : void
 		{
 			if(!_component.state.hovered) _component.state.hovered = true;
 			
@@ -351,7 +351,7 @@ package org.osflash.ui.components.themes.graphic.analog
 		/**
 		 * @private
 		 */
-		private function handleButtonFocusOutSignal(target : ISignalTarget) : void
+		protected function handleButtonFocusOutSignal(target : ISignalTarget) : void
 		{
 			if(_component.state.hovered) _component.state.hovered = false;
 			

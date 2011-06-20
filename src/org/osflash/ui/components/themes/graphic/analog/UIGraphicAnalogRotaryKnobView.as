@@ -1,5 +1,7 @@
 package org.osflash.ui.components.themes.graphic.analog
 {
+	import org.osflash.signals.ISignal;
+	import org.osflash.signals.natives.NativeSignal;
 	import org.osflash.ui.components.analog.IUIAnalogRotaryKnobView;
 	import org.osflash.ui.components.analog.UIAnalogRotaryKnob;
 	import org.osflash.ui.components.analog.UIAnalogRotaryKnobModel;
@@ -13,6 +15,7 @@ package org.osflash.ui.components.themes.graphic.analog
 
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Shape;
+	import flash.events.Event;
 	import flash.geom.Point;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
@@ -20,6 +23,10 @@ package org.osflash.ui.components.themes.graphic.analog
 	public class UIGraphicAnalogRotaryKnobView extends UIGraphicComponentView 
 															implements IUIAnalogRotaryKnobView
 	{
+		
+		private static const ANGLE_MIN : Number = Math.PI / 4 * 3;
+		
+		private static const ANGLE_MAX : Number = Math.PI / 4 * 6;
 		
 		/**
 		 * @private
@@ -80,6 +87,36 @@ package org.osflash.ui.components.themes.graphic.analog
 		 * @private
 		 */
 		private var _lastMousePos : Point;
+		
+		/**
+		 * @private
+		 */
+		private var _mouseDown : Boolean;
+		
+		/**
+		 * @private
+		 */
+		private var _position : Number; 
+		
+		/**
+		 * @private
+		 */
+		private var _positionTarget : Number;
+		
+		/**
+		 * @private
+		 */
+		private var _animating : Boolean;
+		
+		/**
+		 * @private
+		 */
+		private var _positionStoredValue : Boolean;
+		
+		/**
+		 * @private
+		 */
+		private var _nativeEnterFrameSignal : ISignal;
 						
 		public function UIGraphicAnalogRotaryKnobView(config : IUIAnalogRotaryKnobViewConfig)
 		{
@@ -111,9 +148,14 @@ package org.osflash.ui.components.themes.graphic.analog
 			
 			_lastMousePos = new Point();
 			
-			_component.signals.mouseMoveSignal.add(handleMouseMoveSignal);
+			_position = 0;
+			_positionTarget = 0;
+			_positionStoredValue = false;
 			
-			repaintKnob();
+			_mouseDown = false;
+			_animating = false;
+			
+			_nativeEnterFrameSignal = new NativeSignal(_container, Event.ENTER_FRAME);
 		}
 				
 		/**
@@ -165,6 +207,7 @@ package org.osflash.ui.components.themes.graphic.analog
 			_radius = width * 0.5;
 			
 			repaint();
+			updateKnob();
 		}
 		
 		/**
@@ -196,7 +239,7 @@ package org.osflash.ui.components.themes.graphic.analog
 		/**
 		 * @private
 		 */
-		protected function repaintKnob(): void
+		protected function repaintKnob() : void
         {
 			const angle: Number = ( Math.PI / 4 * 3 ) + _model.position * ( Math.PI / 4 * 6 );
 			
@@ -211,6 +254,17 @@ package org.osflash.ui.components.themes.graphic.analog
 			graphics.style(_knobGraphicsData);
 			graphics.drawCircle((cs * r1) + _radius, (sn * r1) + _radius, _radius * 0.1);
 			graphics.endFill();
+			
+			_positionStoredValue = false;
+        }
+        
+        /**
+         * @private
+         */
+        protected function updateKnob() : void
+        {
+        	if(_animating) _positionStoredValue = true;
+			else repaintKnob();	
         }
 		
 		/**
@@ -236,9 +290,9 @@ package org.osflash.ui.components.themes.graphic.analog
 					_backgroundGraphicsData = _colourScheme.backgroundUp;
 				}
 			}
-						
+			
 			repaint();
-			repaintKnob();
+			updateKnob();
 		}
 		
 		/**
@@ -246,32 +300,96 @@ package org.osflash.ui.components.themes.graphic.analog
 		 */
 		protected function handlePositionSignal(value : Number) : void
 		{
-			repaintKnob();
+			updateKnob();
 			
 			value;
 		}
 		
 		/**
+		 * @inheritDoc
+		 */
+		override protected function handleMouseDownSignal(	target : ISignalTarget,
+															mousePos : Point
+															) : void
+		{
+			super.handleMouseDownSignal(target, mousePos);
+			
+			_mouseDown = true;
+			
+			_nativeEnterFrameSignal.add(handleEnterFrameSignal);
+		}
+		
+		/**
 		 * @private
 		 */
-		protected function handleMouseMoveSignal(	target : ISignalTarget,
-												mousePos : Point,
-												mouseDown : Boolean
-												) : void
+		protected function handleEnterFrameSignal(event : Event) : void
 		{
-			if(target != _component || !mouseDown) return;
+			var speed : Number;
 			
-			var value: Number = _model.position;
-                        
-            value -= (mousePos.y - _lastMousePos.y) / 100;
-            
-            if(value < 0) value = 0;
-            else if(value > 1) value = 1;
-            
-            _model.position = value;
-            
-            _lastMousePos.x = mousePos.x;
-            _lastMousePos.y = mousePos.y;
+			// Handle mouse down
+			if(_mouseDown)
+			{
+				speed = 0.4; 
+				
+		        _position -= (_container.mouseY - _lastMousePos.y) / 100;
+		        
+		        if(_position < 0) _position = 0;
+		        else if(_position > 1) _position = 1;
+			}
+	        else
+	        {
+	        	speed = 0.25;
+	        	
+	        	const diff : Number = _position - _positionTarget;
+	        	const abs : Number = diff < 0 ? -diff : diff;
+	        	if(abs < 0.005) 
+	        	{
+	        		_animating = false;
+	        		_nativeEnterFrameSignal.remove(handleEnterFrameSignal);
+	        			        		
+	        		if(_positionStoredValue) repaintKnob();
+	        		
+	        		return;
+	        	}
+	        }
+	        
+	        _animating = true;
+	        	        
+	        _positionTarget += (_position - _positionTarget) * speed;
+	        
+	        if(_positionTarget < 0) _positionTarget = 0;
+		    else if(_positionTarget > 1) _positionTarget = 1;
+	         
+	        _lastMousePos.x = _container.mouseX;
+	        _lastMousePos.y = _container.mouseY;
+	        
+			const angle: Number = ANGLE_MIN + _positionTarget * ANGLE_MAX;
+			
+			const cs: Number = Math.cos( angle );
+			const sn: Number = Math.sin( angle );
+			
+			const r1: Number = _radius - (_radius * 0.25);
+			
+			graphics.context(_knob.graphics);
+			
+			graphics.clear();
+			graphics.style(_knobGraphicsData);
+			graphics.drawCircle((cs * r1) + _radius, (sn * r1) + _radius, _radius * 0.1);
+			graphics.endFill();
+			
+			_model.position = _position;
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		override protected function handleMouseUpSignal(	target : ISignalTarget, 
+															mousePos : Point
+															) : void
+		{
+			super.handleMouseUpSignal(target, mousePos);
+			
+			_mouseDown = false;
 		}
 	}
 }
