@@ -19,7 +19,7 @@ package org.osflash.ui.components
 		{
 			document = new UIDocument(stage, true);
 			
-			for(var i : int = 0; i<1000; i++)
+			for(var i : int = 0; i<200; i++)
 			{
 				const config : UIGraphicAnalogRotaryKnobConfig = 
 															new UIGraphicAnalogRotaryKnobConfig();

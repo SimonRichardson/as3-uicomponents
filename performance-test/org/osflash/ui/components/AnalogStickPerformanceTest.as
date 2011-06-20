@@ -22,6 +22,7 @@ package org.osflash.ui.components
 			
 			for(var i : int = 0; i<1000; i++)
 			{
+				
 				const config : UIGraphicAnalogStickConfig = new UIGraphicAnalogStickConfig();
 				const view : UIGraphicAnalogStickView = new UIGraphicAnalogStickView(config);
 				const analogStick : UIAnalogStick = new UIAnalogStick(view);
