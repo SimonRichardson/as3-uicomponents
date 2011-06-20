@@ -5,15 +5,15 @@ package org.osflash.ui.components.analog
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIAnalogRotaryKnob extends UIComponent
+	public class UIAnalogSlider extends UIComponent
 	{
 				
 		/**
 		 * @private
 		 */
-		private var _model : UIAnalogRotaryKnobModel;
+		private var _model : UIAnalogSliderModel;
 		
-		public function UIAnalogRotaryKnob(view : IUIAnalogRotaryKnobView)
+		public function UIAnalogSlider(view : IUIAnalogRotaryKnobView)
 		{
 			super(view);
 		}
@@ -23,7 +23,7 @@ package org.osflash.ui.components.analog
 		 */	
 		override protected function initModel() : void
 		{
-			model = new UIAnalogRotaryKnobModel();
+			model = new UIAnalogSliderModel();
 		}
 		
 		/**
@@ -31,7 +31,7 @@ package org.osflash.ui.components.analog
 		 */	
 		override protected function initProxy() : void
 		{
-			signalProxy = new UIAnalogRotaryKnobSignalProxy();
+			signalProxy = new UIAnalogSliderSignalProxy();
 		}
 						
 		/**
@@ -39,7 +39,7 @@ package org.osflash.ui.components.analog
 		 */	
 		override public function set model(value : IUIComponentModel) : void
 		{
-			_model = UIAnalogRotaryKnobModel(value);
+			_model = UIAnalogSliderModel(value);
 			super.model = value;
 		}
 		

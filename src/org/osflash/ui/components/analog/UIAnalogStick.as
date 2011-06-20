@@ -42,5 +42,11 @@ package org.osflash.ui.components.analog
 			_model = UIAnalogStickModel(value);
 			super.model = value;
 		}
+		
+		public function get angle() : Number { return _model.angle; }
+		public function set angle(value : Number) : void { _model.angle = value; }
+		
+		public function get radius() : Number { return _model.radius; }
+		public function set radius(value : Number) : void { _model.radius = value; }
 	}
 }

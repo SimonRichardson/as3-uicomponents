@@ -26,7 +26,7 @@ package org.osflash.ui.components.analog
 		/**
 		 * @private
 		 */
-		private var _distance : Number;
+		private var _radius : Number;
 								
 		public function UIAnalogStickModel()
 		{
@@ -44,7 +44,7 @@ package org.osflash.ui.components.analog
 			_signalProxy = UIAnalogStickSignalProxy(_component.signalProxy);
 			
 			_angle = 0;
-			_distance = 0;
+			_radius = 0;
 		}
 		
 		/**
@@ -69,14 +69,14 @@ package org.osflash.ui.components.analog
 			}
 		}
 		
-		public function get distance() : Number { return _distance; }
-		public function set distance(value : Number) : void
+		public function get radius() : Number { return _radius; }
+		public function set radius(value : Number) : void
 		{
-			if(_distance != value)
+			if(_radius != value)
 			{
-				 _distance = value;
+				 _radius = value;
 				 
-				 _signalProxy.distance.dispatch(_distance);
+				 _signalProxy.distance.dispatch(_radius);
 			}
 		}
 	}

@@ -1,10 +1,10 @@
 package org.osflash.ui.components.themes.graphic.analog
 {
-	import org.osflash.ui.components.analog.UIAnalogStickModel;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.natives.NativeSignal;
 	import org.osflash.ui.components.analog.IUIAnalogStickView;
 	import org.osflash.ui.components.analog.UIAnalogStick;
+	import org.osflash.ui.components.analog.UIAnalogStickModel;
 	import org.osflash.ui.components.analog.UIAnalogStickSignalProxy;
 	import org.osflash.ui.components.button.UIButton;
 	import org.osflash.ui.components.component.IUIComponent;
@@ -25,6 +25,8 @@ package org.osflash.ui.components.themes.graphic.analog
 	public class UIGraphicAnalogStickView extends UIGraphicComponentView 
 															implements IUIAnalogStickView
 	{
+		
+		public static const MATH_PI_TWO : Number = Math.PI * 2;
 		
 		/**
 		 * @private
@@ -296,8 +298,8 @@ package org.osflash.ui.components.themes.graphic.analog
 				_button.y += (_buttonTarget.y - _button.y) * 0.5;
 				
 				// set the model
-				_model.angle = angle;
-				_model.distance = distance;
+				_model.angle = (angle + Math.PI) / MATH_PI_TWO;
+				_model.radius = r / radius;
 			}
 			else
 			{

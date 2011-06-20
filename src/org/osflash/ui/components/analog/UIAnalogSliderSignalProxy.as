@@ -6,11 +6,11 @@ package org.osflash.ui.components.analog
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class UIAnalogRotaryKnobSignalProxy extends UIComponentSignalProxy
+	public class UIAnalogSliderSignalProxy extends UIComponentSignalProxy
 	{
 		
 		/**
-		 * The position of the rotary knob as an percentage 0-1
+		 * The position of the slider as an percentage 0-1
 		 * @private
 		 */
 		private const _position : ISignal = new Signal(Number);
