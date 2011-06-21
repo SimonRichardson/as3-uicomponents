@@ -1,8 +1,14 @@
 package org.osflash.ui.components.themes.graphic.analog
 {
-	import flash.display.DisplayObject;
+	import org.osflash.easing.Elastic;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.natives.NativeSignal;
+	import org.osflash.transitions.ITransition;
+	import org.osflash.transitions.ITransitionAdapter;
+	import org.osflash.transitions.Property;
+	import org.osflash.transitions.Transition;
+	import org.osflash.transitions.adapters.DisplayObjectX;
+	import org.osflash.transitions.adapters.DisplayObjectY;
 	import org.osflash.ui.components.analog.IUIAnalogStickView;
 	import org.osflash.ui.components.analog.UIAnalogStick;
 	import org.osflash.ui.components.analog.UIAnalogStickModel;
@@ -15,6 +21,7 @@ package org.osflash.ui.components.themes.graphic.analog
 	import org.osflash.ui.components.themes.graphic.component.UIGraphicsData;
 	import org.osflash.ui.signals.ISignalTarget;
 
+	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Shape;
 	import flash.events.Event;
@@ -107,7 +114,12 @@ package org.osflash.ui.components.themes.graphic.analog
 		 * @private
 		 */
 		private var _nativeEnterFrameSignal : ISignal;
-				
+		
+		/**
+		 * @private
+		 */
+		private var _transition : ITransition;
+						
 		public function UIAnalogStickView(config : IUIAnalogStickViewConfig)
 		{
 			super();
@@ -273,10 +285,45 @@ package org.osflash.ui.components.themes.graphic.analog
 				_button.x = (Math.cos(angle) * r) + offset;
 				_button.y = (Math.sin(angle) * r) + offset;
 				
-				// TODO: Use Easing equation to move it back to the center.
-				
 				_positionStoredValue = false;
+				
+				transitionButton();
 			}
+		}
+		
+		/**
+		 * @private
+		 */
+		protected function transitionButton() : void
+		{
+			if(null != _transition)
+			{
+				_transition.stop();
+				_transition = null;
+			}
+			
+			_animating = true;
+			
+			const radius : int = _button.width * 0.5;
+			const offset : Number = _radius - radius;
+			
+			const displayObject : DisplayObject = _button.displayObject;
+			
+			const adapter0 : ITransitionAdapter = DisplayObjectX.to(	displayObject, 
+																		offset, 
+																		Elastic.EASE_OUT
+																		);
+			const adapter1 : ITransitionAdapter = DisplayObjectY.to(	displayObject, 
+																		offset, 
+																		Elastic.EASE_OUT
+																		);
+			
+			const prop0 : Property = Property.create(adapter0);
+			const prop1 : Property = Property.create(adapter1, prop0);
+			
+			_transition = Transition.create(400, 0, true, prop1);
+			_transition.completedSignal.add(handleTransitionCompleted);
+			_transition.start();
 		}
 		
 		/**
@@ -352,6 +399,12 @@ package org.osflash.ui.components.themes.graphic.analog
 			
 			if(_buttonMouseDown)
 			{
+				if(null != _transition)
+				{
+					_transition.stop();
+					_transition = null;
+				}
+				
 				// Work out the distance
 				const o : Number = offset * 2;
 				const dx : Number = (_container.mouseX - _buttonMouseDownPos.x) - o;
@@ -377,26 +430,22 @@ package org.osflash.ui.components.themes.graphic.analog
 			}
 			else
 			{
-				// TODO : Turn this into an transition
-				displayObject.x += (offset - displayObject.x) * 0.5;
-				displayObject.y += (offset - displayObject.y) * 0.5;
+				_nativeEnterFrameSignal.remove(handleEnterFrameSignal);
 				
-				const x : Number = (displayObject.x - offset);
-				const y : Number = (displayObject.y - offset);
-				const absx : Number = x < 0 ? -x : x;
-				const absy : Number = y < 0 ? -x : y;
-				
-				if(absx <= 0.2 && absy <= 0.2)
-				{
-					displayObject.x = offset;
-					displayObject.y = offset;
-					
-					_animating = false;
-					_nativeEnterFrameSignal.remove(handleEnterFrameSignal);
-					
-					if(_positionStoredValue) updateButton();					
-				}
+				transitionButton();
 			}
+		}
+		
+		/**
+		 * @private
+		 */
+		protected function handleTransitionCompleted(transition : ITransition) : void
+		{
+			_animating = false;
+			
+			if(_positionStoredValue) updateButton();
+			
+			transition;	
 		}
 		
 		/**
