@@ -1,5 +1,6 @@
 package org.osflash.ui.components.button
 {
+	import asunit.asserts.assertEquals;
 	import org.osflash.dom.element.IDOMDocument;
 	import org.osflash.ui.components.themes.graphic.button.UIButtonConfig;
 	import org.osflash.ui.components.themes.graphic.button.UIButtonView;
@@ -43,6 +44,8 @@ package org.osflash.ui.components.button
 			button.height = 75;
 			
 			document.add(button);
+			
+			assertEquals('Document has one item', document.numChildren == 1);
 		}
 	}
 }
