@@ -150,16 +150,6 @@ package org.osflash.ui.components.themes.graphic.component
 		public function drawRoundRectangle(value : Rectangle, radius : Number) : void
 		{
 			if(null == value) throw new ArgumentError('Rectangle can not be null');
-//			
-//			moveTo(image_mc._width - cornerDiameter, 0);
-//			curveTo(image_mc._width, 0, image_mc._width, cornerDiameter);
-//			lineTo(image_mc._width, image_mc._height - cornerDiameter);
-//			curveTo(image_mc._width, image_mc._height, image_mc._width - cornerDiameter, image_mc._height);
-//			lineTo(cornerDiameter, image_mc._height);
-//			curveTo(0, image_mc._height, 0, image_mc._height - cornerDiameter);
-//			lineTo(0, cornerDiameter);
-//			curveTo(0, 0, cornerDiameter, 0);
-//			lineTo(image_mc._width - cornerDiameter, 0)
 			
 			_graphicPath.commands.push(	_moveToCommand,
 										_curveToCommand,
@@ -182,6 +172,34 @@ package org.osflash.ui.components.themes.graphic.component
 									 0, 0, radius, 0,
 									 value.width - radius, 0
 									 );
+		}
+		
+		public function drawRoundRectangleComplex(value : Rectangle, radius : UIGraphicsRectRadius) : void
+		{
+			if(null == value) throw new ArgumentError('Rectangle can not be null');
+			
+			_graphicPath.commands.push(	_moveToCommand,
+										_curveToCommand,
+										_lineToCommand,
+										_curveToCommand,
+										_lineToCommand,
+										_curveToCommand,
+										_lineToCommand,
+										_curveToCommand,
+										_lineToCommand
+										);
+			
+			_graphicPath.data.push ( value.width - radius.topRight, 0,
+									 value.width, 0, value.width, radius.topRight,
+									 value.width, value.height - radius.bottomRight,
+									 value.width, value.height, value.width - radius.bottomRight, value.height,
+									 radius.bottomLeft, value.height,
+									 0, value.height, 0, value.height - radius.bottomLeft,
+									 0, radius.topLeft,
+									 0, 0, radius.topLeft, 0,
+									 value.width - radius.topLeft, 0
+									 );
+									 
 		}
 		
 		public function drawCircle(x : Number, y : Number, radius : Number) : void

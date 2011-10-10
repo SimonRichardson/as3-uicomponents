@@ -2,6 +2,8 @@ package org.osflash.ui.components.text
 {
 	import org.osflash.ui.components.component.IUIComponentModel;
 	import org.osflash.ui.components.component.UIComponent;
+
+	import flash.display.BitmapData;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
@@ -51,5 +53,14 @@ package org.osflash.ui.components.text
 		 */
 		public function get text() : String { return _model.text; }
 		public function set text(value : String) : void { _model.text = value; }
+				
+		/**
+		 * delegate method to relay the icon getter and setter to the IUILabelModel
+		 * 
+		 * @param value BitmapData to set on the icon
+		 * @return BitmapData to return for the label icon
+		 */
+		public function get icon() : BitmapData { return _model.icon; }
+		public function set icon(view : BitmapData) : void { _model.icon = view; }
 	}
 }

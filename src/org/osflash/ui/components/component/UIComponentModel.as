@@ -20,6 +20,11 @@ package org.osflash.ui.components.component
 		 * @private
 		 */
 		private var _keyChar : String;
+		
+		/**
+		 * @private
+		 */
+		private var _tooltipText : String;
 				
 		/**
 		 * @private
@@ -66,6 +71,11 @@ package org.osflash.ui.components.component
 		 */
 		public function get keyChar() : String { return _keyChar; }
 		public function set keyChar(value : String) : void { _keyChar = value; }
-
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get tooltipText() : String { return _tooltipText; }
+		public function set tooltipText(value : String) : void { _tooltipText = value; }
 	}
 }

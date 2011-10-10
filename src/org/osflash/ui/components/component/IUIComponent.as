@@ -1,5 +1,6 @@
 package org.osflash.ui.components.component
 {
+	import org.osflash.ui.geom.UIRectangle;
 	import org.osflash.ui.signals.ISignalTarget;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
@@ -8,6 +9,8 @@ package org.osflash.ui.components.component
 	{
 		
 		function resizeTo(width : int, height : int) : void;
+		
+		function measure(measureResult : UIRectangle) : void;
 		
 		function get view() : IUIComponentView;
 		function set view(value : IUIComponentView) : void;
@@ -41,5 +44,8 @@ package org.osflash.ui.components.component
 		
 		function get keyChar() : String;
 		function set keyChar(value : String) : void;
+		
+		function get tooltipText() : String;
+		function set tooltipText(value : String) : void;
 	}
 }

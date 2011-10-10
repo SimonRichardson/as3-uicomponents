@@ -2,6 +2,8 @@ package org.osflash.ui.components.text
 {
 	import org.osflash.ui.components.component.IUIComponent;
 	import org.osflash.ui.components.component.UIComponentModel;
+
+	import flash.display.BitmapData;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
@@ -12,6 +14,11 @@ package org.osflash.ui.components.text
 		 * @private
 		 */
 		private var _text : String;
+		
+		/**
+		 * @private
+		 */
+		private var _icon : BitmapData;
 		
 		/**
 		 * @private
@@ -59,6 +66,16 @@ package org.osflash.ui.components.text
 			{
 				_text = value;
 				_signalProxy.textChanged.dispatch(value);
+			}
+		}
+		
+		public function get icon() : BitmapData { return _icon; }
+		public function set icon(value : BitmapData) : void
+		{
+			if(_icon != value)
+			{
+				_icon = value;
+				_signalProxy.iconChanged.dispatch(value);
 			}
 		}
 	}

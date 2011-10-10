@@ -134,5 +134,15 @@ package org.osflash.ui.components.component
 		 * @inheritDoc
 		 */
 		public function get padding() : UIPadding { return _padding; }
+		
+		public function dispose() : void 
+		{
+			_margin = null;
+			_padding = null;
+			
+			_bounds = null;
+			_innerBounds = null;
+			_outerBounds = null;
+		}
 	}
 }

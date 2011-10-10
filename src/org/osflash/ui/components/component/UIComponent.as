@@ -1,5 +1,6 @@
 package org.osflash.ui.components.component
 {
+	import org.osflash.ui.geom.UIRectangle;
 	import flash.geom.Point;
 	import org.osflash.ui.display.UISprite;
 	import org.osflash.ui.errors.AbstractMethodError;
@@ -49,6 +50,14 @@ package org.osflash.ui.components.component
 			if(width == view.bounds.width && height == view.bounds.height) return;
 			
 			view.resizeTo(width, height);
+		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function measure(measureResult : UIRectangle) : void
+		{
+			throw new AbstractMethodError('Measure is abstract');
 		}
 		
 		/**
@@ -231,6 +240,12 @@ package org.osflash.ui.components.component
 		 */
 		public function get keyChar() : String { return model.keyChar; }
 		public function set keyChar(value : String) : void { model.keyChar = value; }
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function get tooltipText() : String { return model.tooltipText; }
+		public function set tooltipText(value : String) : void { model.tooltipText = value; }
 		
 	}
 }

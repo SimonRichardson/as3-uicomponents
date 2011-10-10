@@ -37,6 +37,14 @@ package org.osflash.ui.geom
 			_bottom = bottom;
 			_left = left;
 		}
+		
+		public function setValues(top : int, right : int, bottom : int, left : int) : void
+		{
+			_top = top;
+			_right = right;
+			_bottom = bottom;
+			_left = left;
+		}
 
 		public function get top() : int { return _top; }
 		public function set top(value : int) : void { _top = value; }

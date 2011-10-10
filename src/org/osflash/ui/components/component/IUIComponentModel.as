@@ -17,5 +17,8 @@ package org.osflash.ui.components.component
 
 		function get keyChar() : String;
 		function set keyChar(value : String) : void;
+		
+		function get tooltipText() : String;
+		function set tooltipText(value : String) : void;
 	}
 }

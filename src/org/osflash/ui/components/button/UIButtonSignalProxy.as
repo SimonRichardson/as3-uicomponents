@@ -11,6 +11,6 @@ package org.osflash.ui.components.button
 		
 		private const _text : ISignal = new Signal(String);
 		
-		public function get text() : ISignal { return _text; }
+		public function get textChanged() : ISignal { return _text; }
 	}
 }

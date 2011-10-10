@@ -148,5 +148,12 @@ package org.osflash.ui.components.themes.graphic.component
 		{
 			return _graphics;
 		}
+		
+		override public function dispose() : void 
+		{
+			_component = null;
+			
+			super.dispose();
+		}
 	}
 }
